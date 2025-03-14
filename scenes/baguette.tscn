@@ -253,6 +253,102 @@ tracks/13/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../CharacterContainer/Bones/Skeleton2D/Trunk/LeftArm/LeftHand:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-151, 49)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../CharacterContainer/Bones/Skeleton2D/Trunk/LeftArm/LeftHand:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../IK Targets/HandR Target:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(212, 379)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../IK Targets/HandR Target:rotation")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("../IK Targets/FootL Target:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(79, 663)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../IK Targets/FootL Target:rotation")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../IK Targets/FootR Target:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(308, 599)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../IK Targets/FootR Target:rotation")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_r2g7q"]
 resource_name = "run"
@@ -446,7 +542,6 @@ shape = SubResource("CapsuleShape2D_xoi35")
 [node name="Right-arm" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(297, 322)
 rotation = -0.204398
-scale = Vector2(0.999999, 0.999999)
 texture = ExtResource("1_y3fp1")
 offset = Vector2(79, 42)
 
@@ -465,13 +560,13 @@ position = Vector2(180, -39)
 texture = ExtResource("4_rmwjg")
 
 [node name="Eyes" type="Sprite2D" parent="CharacterContainer/Body"]
-position = Vector2(179, 104)
+position = Vector2(178, 104)
 texture = ExtResource("5_6el3j")
 
 [node name="Right-leg" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(178.683, 583.679)
-rotation = -0.0923846
-scale = Vector2(0.999999, 0.999999)
+rotation = -0.0923842
+scale = Vector2(0.999998, 0.999998)
 texture = ExtResource("6_j7fjy")
 offset = Vector2(78, 44)
 
@@ -524,7 +619,6 @@ remote_path = NodePath("../../../../../Body/Left-arm")
 [node name="RightArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Trunk"]
 position = Vector2(146, 10)
 rotation = -0.204398
-scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(0.979183, -0.202978, 0.202978, 0.979183, 146, 10)
 metadata/_local_pose_override_enabled_ = true
 
@@ -537,8 +631,8 @@ remote_path = NodePath("../../../../../Body/Right-arm")
 
 [node name="RightLeg" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Trunk"]
 position = Vector2(27.6832, 271.679)
-rotation = -0.0923842
-scale = Vector2(0.999999, 0.999999)
+rotation = -0.0923841
+scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.995734, -0.0922527, 0.0922527, 0.995734, 27.6832, 271.679)
 metadata/_local_pose_override_enabled_ = true
 
