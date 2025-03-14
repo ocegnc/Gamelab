@@ -4,6 +4,8 @@ extends CharacterBody2D
 const SPEED = 500.0
 const JUMP_VELOCITY = -400.0
 
+var SCORE = 3
+
 @onready var anim_player = $Run
 
 
@@ -23,8 +25,10 @@ func _physics_process(delta: float) -> void:
 	if horizontal_direction or vertical_direction:
 		velocity.x = horizontal_direction * SPEED
 		velocity.y=vertical_direction*SPEED
-		anim_player.play("run")
-		#$CharacterContainer.scale.x=-1 if horizontal_direction<0 else 1
+		anim_player.play("run") 
+		
+		#$CharacterContainer.scale.x= -1 if horizontal_direction<0 else 1
+		#$CharacterContainer.scale.y= -1 if vertical_direction<0 else 1
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)

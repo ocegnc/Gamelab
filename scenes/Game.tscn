@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://coejjurupgrh1"]
+[gd_scene load_steps=7 format=3 uid="uid://coejjurupgrh1"]
 
-[ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="1_rct0t"]
+[ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="1_rs8kk"]
+[ext_resource type="PackedScene" uid="uid://iq8dma1u6j10" path="res://scenes/aliments.tscn" id="2_jpohk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
 distance = -1351.0
@@ -17,10 +18,10 @@ distance = -279.0
 normal = Vector2(-1, 0)
 distance = -4237.0
 
-[node name="Main" type="Node2D"]
+[node name="Game" type="Node2D"]
 position = Vector2(576, 322)
 
-[node name="Baguette" parent="." instance=ExtResource("1_rct0t")]
+[node name="Baguette" parent="." instance=ExtResource("1_rs8kk")]
 position = Vector2(90, 803)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -42,3 +43,6 @@ shape = SubResource("WorldBoundaryShape2D_uspvn")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_u0kfm")
+
+[node name="aliments" parent="." instance=ExtResource("2_jpohk")]
+position = Vector2(2633, 1014)
