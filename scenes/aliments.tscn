@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://iq8dma1u6j10"]
+[gd_scene load_steps=45 format=3 uid="uid://d3uxw8sf6s8eg"]
 
 [ext_resource type="Texture2D" uid="uid://rat2snchrj3d" path="res://assets/Aliment.png" id="1_l2jrp"]
 [ext_resource type="Script" path="res://scripts/aliments.gd" id="1_sxy07"]

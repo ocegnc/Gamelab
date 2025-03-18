@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://coejjurupgrh1"]
+[gd_scene load_steps=7 format=3 uid="uid://bb8juvbd2xw1j"]
 
 [ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="1_rs8kk"]
-[ext_resource type="PackedScene" uid="uid://iq8dma1u6j10" path="res://scenes/aliments.tscn" id="2_jpohk"]
+[ext_resource type="PackedScene" uid="uid://d3uxw8sf6s8eg" path="res://scenes/aliments.tscn" id="2_jpohk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
 distance = -1351.0
