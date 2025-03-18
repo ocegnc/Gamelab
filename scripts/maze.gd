@@ -40,6 +40,7 @@ func place_random_tile():
 			for k in j:
 				set_cell(TILE_LAYER, grid_position+k, num_source, k)
 		num_source+=1
+		#test push
 	
 	# WHEN WE WILL HAVE MORE TILES
 	#var num_source = 0
