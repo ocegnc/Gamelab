@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://1ueq2wi7ua2k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fmbnd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6e5k"]
+bg_color = Color(0.290512, 0.505981, 0.314636, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0phg"]
+bg_color = Color(0.19175, 0.35026, 0.209794, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7a11"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 270.0
+offset_right = 713.0
+offset_bottom = 312.0
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_color = Color(0.628592, 0.420328, 0.151188, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fmbnd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_c6e5k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_m0phg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_d7a11")
+text = "Main Menu"

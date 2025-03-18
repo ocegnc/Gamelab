@@ -543,7 +543,6 @@ shape = SubResource("CapsuleShape2D_xoi35")
 [node name="Right-arm" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(297, 322)
 rotation = -0.204398
-scale = Vector2(1, 1)
 texture = ExtResource("1_y3fp1")
 offset = Vector2(79, 42)
 
@@ -573,9 +572,9 @@ texture = ExtResource("6_j7fjy")
 offset = Vector2(78, 44)
 
 [node name="Left-arm" type="Sprite2D" parent="CharacterContainer/Body"]
-position = Vector2(5.01582, 326)
-rotation = -0.0693515
-scale = Vector2(0.999936, 0.999936)
+position = Vector2(5.00033, 326)
+rotation = -0.069393
+scale = Vector2(0.999993, 0.999993)
 texture = ExtResource("7_0cxeg")
 offset = Vector2(-84, 32)
 
