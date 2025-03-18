@@ -23,7 +23,7 @@ distance = -4237.0
 position = Vector2(576, 322)
 
 [node name="Maze256" parent="." instance=ExtResource("3_nynup")]
-position = Vector2(-1448, -990)
+position = Vector2(1852, 1018)
 
 [node name="Baguette" parent="." instance=ExtResource("1_rs8kk")]
 position = Vector2(90, 803)

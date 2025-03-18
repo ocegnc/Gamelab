@@ -1,4 +1,3 @@
-
 extends TileMap
 
 const TILE_LAYER = 0  # Layer du TileMap (0 par défaut)
@@ -7,6 +6,17 @@ const TILE_LAYER = 0  # Layer du TileMap (0 par défaut)
 # Liste des indices des tuiles principales dans le TileSet
 const TILE_SET_INDICES = [0, 1]  # Ajuste selon ton TileSet
 
+func get_template(x):
+	var template=[]
+	for i in range(x, x + 16):  # x → x+15 inclus
+		for j in range(1, 17):   # y = 1 → 16 inclus
+			template.append(Vector2i(i, j))
+	return template
+	
+var first_template = get_template(24)
+var second_template = get_template(40)
+var all_templates = [ first_template,second_template]
+
 func _ready():
 	randomize()  # Assure un tirage aléatoire différent à chaque exécution
 	place_random_tile()
@@ -14,7 +24,7 @@ func _ready():
 # Fonction pour placer une tuile aléatoire au centre de l'écran
 func place_random_tile():
 	#var random_source = TILE_SET_INDICES[randi_range(0, TILE_SET_INDICES.size() - 1)]  # Choisir une tuile au hasard
-	var random_tileX = randi_range(0, 1) #choix au hasard d'une tuiles de la tiles (CHANGE BY 2)
+	#var random_tileX = randi_range(0, 1) #choix au hasard d'une tuiles de la tiles (CHANGE BY 2)
 	
 	var tile_size = Vector2(16, 16)  # Taille de chaque tuile en pixels (à ajuster selon ton TileSet)
 # Position désirée en pixels (ex: placer l'origine à 100px, 200px de l'écran)
@@ -22,8 +32,15 @@ func place_random_tile():
 	# Convertir la position en pixels en coordonnées de TileMap
 	var grid_position = Vector2i(desired_pixel_position / tile_size)
 	
-	set_cell(TILE_LAYER, grid_position, 0, Vector2i(1, 0))  # Placer la tuile au centre
-	set_cell(TILE_LAYER, grid_position+Vector2i(16,0), 1, Vector2i(2, 0))
+	
+	var num_source = 0
+	var position
+	for i in TILE_SET_INDICES:
+		for j in all_templates:
+			for k in j:
+				set_cell(TILE_LAYER, grid_position+k, num_source, k)
+		num_source+=1
+		#test push
 	
 	# WHEN WE WILL HAVE MORE TILES
 	#var num_source = 0
@@ -31,4 +48,3 @@ func place_random_tile():
 		#set_cell(TILE_LAYER, center_pos, num_source, Vector2i(1, 0)) 
 		#num_source+=1
 #
-	
