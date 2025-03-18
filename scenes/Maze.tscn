@@ -2873,7 +2873,9 @@ sources/0 = SubResource("TileSetAtlasSource_xjcfh")
 sources/1 = SubResource("TileSetAtlasSource_sgrsh")
 
 [node name="Maze256" type="TileMap"]
+scale = Vector2(10, 10)
 tile_set = SubResource("TileSet_frilr")
 rendering_quadrant_size = 128
+collision_animatable = true
 format = 2
 script = ExtResource("2_afpr5")
