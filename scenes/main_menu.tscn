@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://ba5pm3fuf7b1c"]
 
-[ext_resource type="Texture2D" path="res://assets/Background Menu.png" id="1_18s0s"]
-[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_cb872"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5grlm"]
+[ext_resource type="Texture2D" uid="uid://d0n1k6ywbcbd7" path="res://assets/Background Menu.png" id="2_5qedd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wbb4k"]
-texture = ExtResource("1_18s0s")
+texture = ExtResource("2_5qedd")
 modulate_color = Color(0.93408, 0.93408, 0.93408, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_534vi"]
@@ -43,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_cb872")
+script = ExtResource("1_5grlm")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
