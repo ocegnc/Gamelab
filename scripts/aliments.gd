@@ -6,7 +6,6 @@ extends Area2D
 func _ready() -> void:
 	sprite.frame = randi_range(0, 39)
 	connect("body_entered",_on_body_entered)
-	#bicerz
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
