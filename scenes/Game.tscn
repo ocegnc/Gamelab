@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bb8juvbd2xw1j"]
+[gd_scene load_steps=8 format=3 uid="uid://bb8juvbd2xw1j"]
 
 [ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="1_rs8kk"]
 [ext_resource type="PackedScene" uid="uid://d3uxw8sf6s8eg" path="res://scenes/aliments.tscn" id="2_jpohk"]
+[ext_resource type="PackedScene" uid="uid://cmy2gh36pf4x6" path="res://scenes/Maze.tscn" id="3_nynup"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
 distance = -1351.0
@@ -20,6 +21,9 @@ distance = -4237.0
 
 [node name="Game" type="Node2D"]
 position = Vector2(576, 322)
+
+[node name="Maze256" parent="." instance=ExtResource("3_nynup")]
+position = Vector2(-1448, -990)
 
 [node name="Baguette" parent="." instance=ExtResource("1_rs8kk")]
 position = Vector2(90, 803)
