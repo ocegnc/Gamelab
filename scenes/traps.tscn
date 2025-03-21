@@ -4,29 +4,31 @@
 [ext_resource type="Texture2D" uid="uid://bjq7rswmvpq2j" path="res://assets/Trou.png" id="2_y5fmq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ywnrt"]
-radius = 4.0
+radius = 29.1548
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r2ypi"]
-radius = 4.1
+radius = 92.1358
 
 [node name="Traps" type="Node2D"]
 
 [node name="Trou" type="RigidBody2D" parent="."]
-position = Vector2(19, 20)
+position = Vector2(523, 245)
+mass = 0.001
+gravity_scale = 0.0
 script = ExtResource("1_bosnp")
 
 [node name="Sprite2D" type="Sprite2D" parent="Trou"]
 modulate = Color(0.0512434, 0.00198597, 0.113446, 1)
-position = Vector2(6.09368, 17.2006)
-scale = Vector2(-0.0451998, -0.0478977)
+position = Vector2(36, 26.5244)
+scale = Vector2(-1.73376, -1.84309)
 texture = ExtResource("2_y5fmq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trou"]
-position = Vector2(6, 17)
+position = Vector2(36, 17)
 shape = SubResource("CircleShape2D_ywnrt")
 
 [node name="Area2D" type="Area2D" parent="Trou"]
-position = Vector2(6, 17)
+position = Vector2(36, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trou/Area2D"]
 shape = SubResource("CircleShape2D_r2ypi")
