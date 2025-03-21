@@ -1,4 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://1ueq2wi7ua2k"]
+[gd_scene load_steps=7 format=3 uid="uid://1ueq2wi7ua2k"]
+
+[ext_resource type="Texture2D" uid="uid://cj7ry6i27fl0x" path="res://assets/Win_screen.webp" id="1_bjve4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pfrfl"]
+texture = ExtResource("1_bjve4")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fmbnd"]
 
@@ -37,12 +42,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pfrfl")
+
 [node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 550.0
-offset_top = 270.0
-offset_right = 713.0
-offset_bottom = 312.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = -21.0
+offset_right = 81.5
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)

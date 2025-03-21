@@ -3,7 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="1_rs8kk"]
 [ext_resource type="PackedScene" uid="uid://d3uxw8sf6s8eg" path="res://scenes/aliments.tscn" id="2_jpohk"]
 [ext_resource type="PackedScene" uid="uid://cmy2gh36pf4x6" path="res://scenes/Maze.tscn" id="3_nynup"]
+
 [ext_resource type="PackedScene" uid="uid://cfts2gx72hn72" path="res://scenes/traps.tscn" id="4_cnxh8"]
+
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
 distance = -1351.0
@@ -27,6 +29,7 @@ position = Vector2(576, 322)
 position = Vector2(1852, 1018)
 
 [node name="Baguette" parent="." instance=ExtResource("1_rs8kk")]
+
 position = Vector2(-49, 31)
 scale = Vector2(0.05, 0.05)
 
@@ -34,6 +37,8 @@ scale = Vector2(0.05, 0.05)
 position = Vector2(680, 490)
 scale = Vector2(2.5, 2.5)
 zoom = Vector2(2.5, 2.5)
+
+
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -52,8 +57,10 @@ shape = SubResource("WorldBoundaryShape2D_uspvn")
 shape = SubResource("WorldBoundaryShape2D_u0kfm")
 
 [node name="aliments" parent="." instance=ExtResource("2_jpohk")]
+
 position = Vector2(306, 62)
 scale = Vector2(0.2, 0.2)
 
 [node name="Traps" parent="." instance=ExtResource("4_cnxh8")]
 position = Vector2(171, 14)
+
