@@ -529,7 +529,6 @@ _data = {
 }
 
 [node name="Baguette" type="CharacterBody2D"]
-scale = Vector2(0.4, 0.4)
 script = ExtResource("1_t35pd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -543,6 +542,7 @@ shape = SubResource("CapsuleShape2D_xoi35")
 [node name="Right-arm" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(297, 322)
 rotation = -0.204398
+scale = Vector2(1, 1)
 texture = ExtResource("1_y3fp1")
 offset = Vector2(79, 42)
 
@@ -566,22 +566,22 @@ texture = ExtResource("5_6el3j")
 
 [node name="Right-leg" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(178.683, 583.679)
-rotation = -0.0923842
-scale = Vector2(0.999997, 0.999997)
+rotation = -0.0923846
+scale = Vector2(0.999998, 0.999998)
 texture = ExtResource("6_j7fjy")
 offset = Vector2(78, 44)
 
 [node name="Left-arm" type="Sprite2D" parent="CharacterContainer/Body"]
-position = Vector2(5.00033, 326)
-rotation = -0.069393
-scale = Vector2(0.999993, 0.999993)
+position = Vector2(5, 326)
+rotation = -0.0693939
+scale = Vector2(0.999995, 0.999995)
 texture = ExtResource("7_0cxeg")
 offset = Vector2(-84, 32)
 
 [node name="Left-leg" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(109, 580)
 rotation = 0.109001
-scale = Vector2(0.999995, 0.999995)
+scale = Vector2(0.999997, 0.999997)
 texture = ExtResource("8_wm64b")
 offset = Vector2(-83.2953, 37.1635)
 
