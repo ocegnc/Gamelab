@@ -1,44 +1,53 @@
 extends CharacterBody2D
 
-const SPEED = 100.0
+const SPEED = 100.0  # Vitesse normale
+const BOOST_SPEED = 300.0  # Vitesse d'accélération
 
-const JUMP_VELOCITY = -400.0
+var direction_x = 1  # 1 = droite, -1 = gauche
+var direction_y = 0  # 1 = bas, -1 = haut, 0 = neutre
 
-var SCORE = 3
-var origin_position: Vector2  # Var to stock position 
+var origin_position: Vector2  # Position d'origine
 
 @onready var anim_player = $Run
 
 func _ready() -> void:
-	# Register the origin position of the baguette
+	# Stocker la position d'origine
 	origin_position = global_position
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	# Changer la direction horizontale
+	if Input.is_action_just_pressed("ui_right"):
+		direction_x = 1
+	elif Input.is_action_just_pressed("ui_left"):
+		direction_x = -1
+	
+	# Changer la direction verticale
+	if Input.is_action_just_pressed("ui_up"):
+		direction_y = -1
+	elif Input.is_action_just_pressed("ui_down"):
+		direction_y = 1
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept"):
-		velocity.y = JUMP_VELOCITY
+	# Déplacement en continu dans la dernière direction connue
+	velocity.x = direction_x * SPEED
+	velocity.y = direction_y * SPEED
 
-	# Get the input direction and handle the movement/deceleration.
-	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
-	var vertical_direction := Input.get_axis("ui_up", "ui_down")
-	if horizontal_direction or vertical_direction:
-		velocity.x = horizontal_direction * SPEED
-		velocity.y = vertical_direction * SPEED
-		anim_player.play("run") 
+	# Accélération si une touche est maintenue
+	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"):
+		velocity.x = direction_x * BOOST_SPEED
+	if Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
+		velocity.y = direction_y * BOOST_SPEED
+
+	# Gestion des animations
+	if velocity.x != 0 or velocity.y != 0:
+		anim_player.play("run")
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
 		anim_player.stop()
 
 	move_and_slide()
 
-# Reset baguette position
+# Reset la position du personnage
 func reset_position() -> void:
 	global_position = origin_position
 	velocity = Vector2.ZERO 
-
-	
+	direction_x = 1  # Reset vers la droite par défaut
+	direction_y = 0  # Reset du mouvement vertical
