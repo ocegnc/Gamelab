@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://tkg17k5p8r1u"]
+
+[ext_resource type="Script" path="res://scripts/maze_1.gd" id="1_vv1ol"]
+[ext_resource type="Texture2D" uid="uid://blt4164ktblfc" path="res://assets/Maze_16x16.png" id="2_hxsvb"]
+[ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="3_xfk05"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7dofi"]
+texture = ExtResource("2_hxsvb")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6, -8, -8, 8, -8, 8, -6)
+5:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(4, -5.75, 4.25, -2.25, 5, -2.625, 4.875, -5.875)
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xfylr"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_7dofi")
+
+[node name="Maze1" type="Node2D"]
+script = ExtResource("1_vv1ol")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(4, 4)
+tile_set = SubResource("TileSet_xfylr")
+
+[node name="Baguette" parent="." instance=ExtResource("3_xfk05")]
+position = Vector2(209, 103)
+scale = Vector2(0.1, 0.1)
+
+[node name="Camera2D" type="Camera2D" parent="Baguette"]
