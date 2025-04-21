@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfts2gx72hn72"]
+[gd_scene load_steps=11 format=3 uid="uid://cfts2gx72hn72"]
 
 [ext_resource type="Script" path="res://scripts/trou.gd" id="1_bosnp"]
 [ext_resource type="Texture2D" uid="uid://bjq7rswmvpq2j" path="res://assets/Trou.png" id="2_y5fmq"]
 [ext_resource type="Script" path="res://scripts/knife.gd" id="3_3fdly"]
-[ext_resource type="Texture2D" path="res://assets/knife.png" id="3_ay0ry"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ywnrt"]
 radius = 14.0
@@ -110,7 +109,6 @@ script = ExtResource("3_3fdly")
 [node name="Sprite2D" type="Sprite2D" parent="Knife"]
 position = Vector2(1, 12)
 scale = Vector2(0.110831, 0.110831)
-texture = ExtResource("3_ay0ry")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Knife"]
 position = Vector2(32, 5)
