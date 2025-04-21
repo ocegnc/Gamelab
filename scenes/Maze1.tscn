@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://tkg17k5p8r1u"]
+[gd_scene load_steps=5 format=3 uid="uid://tkg17k5p8r1u"]
 
 [ext_resource type="Script" path="res://scripts/maze_1.gd" id="1_vv1ol"]
 [ext_resource type="Texture2D" uid="uid://blt4164ktblfc" path="res://assets/Maze_16x16.png" id="2_hxsvb"]
-[ext_resource type="PackedScene" uid="uid://bhg5cxhvy7yp0" path="res://scenes/baguette.tscn" id="3_xfk05"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7dofi"]
 texture = ExtResource("2_hxsvb")
@@ -40,9 +39,3 @@ script = ExtResource("1_vv1ol")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(4, 4)
 tile_set = SubResource("TileSet_xfylr")
-
-[node name="Baguette" parent="." instance=ExtResource("3_xfk05")]
-position = Vector2(209, 103)
-scale = Vector2(0.1, 0.1)
-
-[node name="Camera2D" type="Camera2D" parent="Baguette"]

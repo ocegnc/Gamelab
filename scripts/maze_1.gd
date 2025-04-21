@@ -7,59 +7,86 @@ var wall_tile_top := Vector2i(1,0)
 var wall_tile_bottom := Vector2i(5,0)
 var wall_tile_left_side := Vector2i(0, 0)
 var wall_tile_right_side := Vector2i(2, 0)
+var skull_tile := Vector2i(1, 3)
 var tile_ketchup := Vector2i(3, 0)
 var tile_mayo := Vector2i(4, 0)
- 
-# Constants defining the grid size, cell size, and room parameters
-const WIDTH = 400
-const HEIGHT = 300
-const CELL_SIZE = 10
-const MAX_ROOMS = 10
 
+# Constants defining the grid size, cell size, and room parameters
+const WIDTH = 60  # Augmenté pour accommoder 9 salles
+const HEIGHT = 60
+const FIXED_ROOMS = [
+	# Format: [x, y, width, height]
+	# Première ligne (haut)
+	[10, 10, 12, 12],    # Haut-gauche
+	[26, 10, 7, 7],    # Haut-centre
+	[42, 10, 9, 9],    # Haut-droite
+	
+	# Deuxième ligne (milieu)
+	[10, 26, 7, 7],    # Centre-gauche
+	[26, 26, 10, 10],  # Grande salle centrale
+	[42, 26, 7, 7],    # Centre-droite
+	
+	# Troisième ligne (bas)
+	[10, 42, 7, 7],    # Bas-gauche
+	[26, 42, 7, 7],    # Bas-centre
+	[42, 42, 7, 7]     # Bas-droite
+]
 const ROOM_TEMPLATES = [
 	# Format: [largeur, hauteur]
 	[5, 5],  # Petite salle carrée
 	[7, 7],  # Salle moyenne
-	[10, 5], # Salle rectangulaire large
+	[10, 10], # Salle rectangulaire large
 	[5, 10], # Salle rectangulaire haute
 	[8, 8]   # Grande salle carrée
 ]
 # Arrays to hold the grid data and the list of rooms
 var grid = []
 var rooms = []
- 
-# _ready is called when the node is added to the scene
+
 func _ready():
-	# Initialize the random number generator
 	randomize()
-	# Create the grid filled with walls
 	initialize_grid()
-	# Generate the dungeon by placing rooms and connecting them
 	generate_dungeon()
-	# Draw the dungeon on the screen
 	draw_dungeon()
- 
-# Initializes the grid with all cells set to walls (represented by 1)
+	spawn_player()
 func initialize_grid():
 	for x in range(WIDTH):
-		grid.append([])  # Add a new row to the grid
+		grid.append([])
 		for y in range(HEIGHT):
-			grid[x].append(1)  # Fill each cell in the row with 1 (wall)
- 
-# Main function to generate the dungeon by placing rooms and connecting them
+			grid[x].append(1)
+
 func generate_dungeon():
-	for i in range(MAX_ROOMS):
-		# Generate a room with random size and position
-		var room = generate_room()
-		# Attempt to place the room in the grid
-		if place_room(room):
-			# If this isn't the first room, connect it to the previous room
-			if rooms.size() > 0:
-				connect_rooms(rooms[-1], room)  # Connect the new room to the last placed room
-			# Add the room to the list of rooms in the dungeon
-			rooms.append(room)
- 
-# Generates a room with random width, height, and position within the grid
+	# Place toutes les salles d'abord
+	for room_data in FIXED_ROOMS:
+		var room = Rect2(room_data[0], room_data[1], room_data[2], room_data[3])
+		place_room(room)
+		rooms.append(room)
+	
+	# Connecte toutes les salles adjacentes
+	if rooms.size() == 9:
+		# Ligne du haut
+		connect_rooms(rooms[0], rooms[1])
+		connect_rooms(rooms[1], rooms[2])
+		
+		# Ligne du milieu
+		connect_rooms(rooms[3], rooms[4])
+		connect_rooms(rooms[4], rooms[5])
+		
+		# Ligne du bas
+		connect_rooms(rooms[6], rooms[7])
+		connect_rooms(rooms[7], rooms[8])
+		
+		# Colonnes verticales
+		connect_rooms(rooms[0], rooms[3])
+		connect_rooms(rooms[3], rooms[6])
+		
+		connect_rooms(rooms[1], rooms[4])
+		connect_rooms(rooms[4], rooms[7])
+		
+		connect_rooms(rooms[2], rooms[5])
+		connect_rooms(rooms[5], rooms[8])
+
+
 func generate_room():
 	# Choisis un template aléatoire parmi ceux disponibles
 	var template = ROOM_TEMPLATES[randi() % ROOM_TEMPLATES.size()]
@@ -87,7 +114,7 @@ func place_room(room):
 	return true  # Room successfully placed, return true
  
 # Connects two rooms with a corridor, allowing for a customizable corridor width
-func connect_rooms(room1, room2, corridor_width=4):
+func connect_rooms(room1, room2, corridor_width=1):
 	# Determine the starting point for the corridor (center of room1)
 	var start = Vector2(
 		int(room1.position.x + room1.size.x / 2),
@@ -122,9 +149,40 @@ func connect_rooms(room1, room2, corridor_width=4):
 				# Ensure we don't go out of grid bounds
 				if current.x + i >= 0 and current.x + i < WIDTH and current.y + j >= 0 and current.y + j < HEIGHT:
 					grid[current.x + i][current.y + j] = 0  # Set cells to floor
+
+func spawn_player():
+	# 1. Trouver la salle en haut à droite (3ème salle dans FIXED_ROOMS)
+	var spawn_room = rooms[2]  # Index 2 pour la salle en haut à droite
+	
+	# 2. Calculer la position centrale en pixels
+	var center_x = spawn_room.position.x + spawn_room.size.x/2
+	var center_y = spawn_room.position.y + spawn_room.size.y/2
+	var spawn_pos = tile_map_layer.map_to_local(Vector2i(center_x, center_y))
+	
+	# 3. Vérifier si une baguette existe déjà
+	var existing_baguette = get_node_or_null("Baguette")
+	if existing_baguette:
+		existing_baguette.queue_free()  # Supprime l'ancienne instance
+	
+	# 4. Créer la nouvelle instance
+	var baguette_instance = player.instantiate()
+	baguette_instance.name = "Baguette"  # Nom explicite
+	
+	# 5. Appliquer les transformations AVANT d'ajouter à la scène
+	baguette_instance.scale = Vector2(0.1, 0.1)  # Échelle réduite de moitié
+	baguette_instance.position = spawn_pos
+	 
+	# 6. Configurer la caméra
+	var camera = baguette_instance.get_node("Camera2D")
+	camera.zoom = Vector2(0.7, 0.7)  # Zoom personnalisé
+	
+	# 7. Ajouter à la scène
+	add_child(baguette_instance)
+	
+	# Debug
+	print("Baguette créée à ", spawn_pos, " dans la salle en haut à droite")
  
 # Draws the dungeon on the screen by creating visual representations of the grid
-				
 func draw_dungeon():
 	for x in range(WIDTH):
 		for y in range(HEIGHT):
