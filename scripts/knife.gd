@@ -1,33 +1,29 @@
-extends RigidBody2D
+extends CharacterBody2D
 
-const SPEED = 100.0  # Vitesse du couteau
-var direction = -1  # 1 = droite, -1 = gauche
+const SPEED = 200.0
+var direction = -1
 
-var left_limit = 300  # Position X minimale
-var right_limit = 800  # Position X maximale
+const left_limit = 300
+const right_limit = 800
 
 @onready var anim_player = $knifemoove
 
+
 func _ready() -> void:
-	# Facultatif : Placer le couteau à une position de départ
 	global_position.x = right_limit
-
-func _process(delta: float) -> void:
-	
 	anim_player.play("knifemoove")
-	
-	
-	# Déplacer le couteau
-	global_position.x += direction * SPEED * delta
 
-	# Changer de direction aux limites
+
+func _physics_process(delta: float) -> void:
+
+	# Déplacement
+	velocity.x = direction * SPEED
+
+	# Bascule de direction aux limites
 	if global_position.x >= right_limit:
-		direction = -1  # Repart vers la gauche
+		direction = -1
+		$Sprite2D2.scale.x = -direction
 	elif global_position.x <= left_limit:
-		direction = 1  # Repart vers la droite
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D:
-		print("Touched")
-		if body.has_method("reset_position"):
-			pass
+		direction = 1
+		$Sprite2D2.scale.x = -direction
+	move_and_slide()
