@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb8juvbd2xw1j"]
+[gd_scene load_steps=9 format=3 uid="uid://bb8juvbd2xw1j"]
 
 [ext_resource type="PackedScene" uid="uid://d3uxw8sf6s8eg" path="res://scenes/aliments.tscn" id="2_jpohk"]
-[ext_resource type="PackedScene" uid="uid://cfts2gx72hn72" path="res://scenes/traps.tscn" id="4_cnxh8"]
+[ext_resource type="PackedScene" uid="uid://beymxkwmr68ex" path="res://scenes/traps/knife.tscn" id="3_2b3sq"]
+[ext_resource type="PackedScene" uid="uid://dmdh5wjpewhf" path="res://scenes/traps/trou.tscn" id="4_cslv7"]
 [ext_resource type="PackedScene" uid="uid://tkg17k5p8r1u" path="res://scenes/Maze1.tscn" id="4_nulsm"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
@@ -42,7 +43,11 @@ shape = SubResource("WorldBoundaryShape2D_u0kfm")
 position = Vector2(306, 62)
 scale = Vector2(0.2, 0.2)
 
-[node name="Traps" parent="." instance=ExtResource("4_cnxh8")]
-position = Vector2(171, 14)
-
 [node name="Maze1" parent="." instance=ExtResource("4_nulsm")]
+
+[node name="knife" parent="." instance=ExtResource("3_2b3sq")]
+position = Vector2(914, 411)
+scale = Vector2(0.2, 0.2)
+
+[node name="Trou" parent="." instance=ExtResource("4_cslv7")]
+position = Vector2(101, 25)
