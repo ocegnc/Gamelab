@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const SPEED = 100.0  # Vitesse normale
-const BOOST_SPEED = 300.0  # Vitesse d'accélération
+const SPEED = 50.0  # Vitesse normale
+const BOOST_SPEED = 150.0  # Vitesse d'accélération
 
 var direction_x = 1  # 1 = droite, -1 = gauche
 var direction_y = 0  # 1 = bas, -1 = haut, 0 = neutre
@@ -10,9 +10,9 @@ var origin_position: Vector2  # Position d'origine
 
 @onready var anim_player = $Run
 
-func _ready() -> void:
-	# Stocker la position d'origine
-	origin_position = global_position
+func _ready() -> void: 
+	if not has_meta("is_main_instance"):
+		origin_position = global_position
 
 func _physics_process(delta: float) -> void:
 	# Changer la direction horizontale
@@ -44,10 +44,8 @@ func _physics_process(delta: float) -> void:
 		anim_player.stop()
 
 	move_and_slide()
-
 # Reset la position du personnage
 func reset_position() -> void:
-	global_position = origin_position
 	velocity = Vector2.ZERO 
 	direction_x = 1  # Reset vers la droite par défaut
 	direction_y = 0  # Reset du mouvement vertical

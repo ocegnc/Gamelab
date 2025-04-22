@@ -17,9 +17,9 @@ const HEIGHT = 60
 const FIXED_ROOMS = [
 	# Format: [x, y, width, height]
 	# Première ligne (haut)
-	[10, 10, 12, 12],    # Haut-gauche
+	[10, 10, 9, 9],    # Haut-gauche
 	[26, 10, 7, 7],    # Haut-centre
-	[42, 10, 9, 9],    # Haut-droite
+	[42, 10, 7, 7],    # Haut-droite
 	
 	# Deuxième ligne (milieu)
 	[10, 26, 7, 7],    # Centre-gauche
@@ -48,7 +48,7 @@ func _ready():
 	initialize_grid()
 	generate_dungeon()
 	draw_dungeon()
-	spawn_player()
+
 func initialize_grid():
 	for x in range(WIDTH):
 		grid.append([])
@@ -149,41 +149,10 @@ func connect_rooms(room1, room2, corridor_width=1):
 				# Ensure we don't go out of grid bounds
 				if current.x + i >= 0 and current.x + i < WIDTH and current.y + j >= 0 and current.y + j < HEIGHT:
 					grid[current.x + i][current.y + j] = 0  # Set cells to floor
-
-func spawn_player():
-	# 1. Trouver la salle en haut à droite (3ème salle dans FIXED_ROOMS)
-	var spawn_room = rooms[2]  # Index 2 pour la salle en haut à droite
-	
-	# 2. Calculer la position centrale en pixels
-	var center_x = spawn_room.position.x + spawn_room.size.x/2
-	var center_y = spawn_room.position.y + spawn_room.size.y/2
-	var spawn_pos = tile_map_layer.map_to_local(Vector2i(center_x, center_y))
-	
-	# 3. Vérifier si une baguette existe déjà
-	var existing_baguette = get_node_or_null("Baguette")
-	if existing_baguette:
-		existing_baguette.queue_free()  # Supprime l'ancienne instance
-	
-	# 4. Créer la nouvelle instance
-	var baguette_instance = player.instantiate()
-	baguette_instance.name = "Baguette"  # Nom explicite
-	
-	# 5. Appliquer les transformations AVANT d'ajouter à la scène
-	baguette_instance.scale = Vector2(0.1, 0.1)  # Échelle réduite de moitié
-	baguette_instance.position = spawn_pos
-	 
-	# 6. Configurer la caméra
-	var camera = baguette_instance.get_node("Camera2D")
-	camera.zoom = Vector2(0.7, 0.7)  # Zoom personnalisé
-	
-	# 7. Ajouter à la scène
-	add_child(baguette_instance)
-	
-	# Debug
-	print("Baguette créée à ", spawn_pos, " dans la salle en haut à droite")
  
 # Draws the dungeon on the screen by creating visual representations of the grid
 func draw_dungeon():
+
 	for x in range(WIDTH):
 		for y in range(HEIGHT):
 			var tile_position = Vector2i(x, y)
@@ -238,7 +207,7 @@ func draw_dungeon():
 			tile_map_layer.set_cell(ketchup_pos, 0, tile_ketchup)
 		
 		# Pièges dans les salles moyennes (7x7)
-		if room.size.x == 35 and room.size.y == 35:
+		if room.size.x == 7 and room.size.y == 7:
 	# Position au centre de la salle en coordonnées grille
 			var center_x_grid = room.position.x + floor(room.size.x / 2.0)
 			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
@@ -249,3 +218,11 @@ func draw_dungeon():
 			var trap = trap_scene.instantiate()
 			trap.position = trap_pos
 			add_child(trap)
+		if room.size.x == 9 and room.size.y == 9:
+			var center_x_grid = room.position.x + floor(room.size.x / 2.0)
+			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
+			var baguette_pos = tile_map_layer.map_to_local(Vector2i(center_x_grid, center_y_grid))
+			var baguette = player.instantiate()
+			baguette.scale = Vector2(0.009, 0.009)
+			baguette.position = baguette_pos
+			add_child(baguette)
