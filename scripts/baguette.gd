@@ -49,3 +49,8 @@ func reset_position() -> void:
 	velocity = Vector2.ZERO 
 	direction_x = 1  # Reset vers la droite par défaut
 	direction_y = 0  # Reset du mouvement vertical
+	
+func reset_position_trou() -> void:
+	velocity = Vector2.ZERO 
+	direction_x = 1  # Reset vers la droite par défaut
+	direction_y = 0  # Reset du mouvement vertical

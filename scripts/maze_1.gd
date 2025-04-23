@@ -2,6 +2,7 @@ extends Node2D
 @onready var tile_map_layer = $TileMapLayer
 @onready var player = preload("res://scenes/baguette.tscn")
 @onready var trap_scene = preload("res://scenes/traps.tscn")
+@onready var trou_scene = preload("res://scenes/traps/trou.tscn")
 var floor_tile := Vector2i(0,2)
 var wall_tile_top := Vector2i(1,0)
 var wall_tile_bottom := Vector2i(5,0)
@@ -12,13 +13,13 @@ var tile_ketchup := Vector2i(3, 0)
 var tile_mayo := Vector2i(4, 0)
 
 # Constants defining the grid size, cell size, and room parameters
-const WIDTH = 60  # Augmenté pour accommoder 9 salles
-const HEIGHT = 60
+const WIDTH = 80  # Augmenté pour accommoder 9 salles
+const HEIGHT = 80
 const FIXED_ROOMS = [
 	# Format: [x, y, width, height]
 	# Première ligne (haut)
 	[10, 10, 9, 9],    # Haut-gauche
-	[26, 10, 7, 7],    # Haut-centre
+	[26, 10, 14, 14],    # Haut-centre
 	[42, 10, 7, 7],    # Haut-droite
 	
 	# Deuxième ligne (milieu)
@@ -213,11 +214,11 @@ func draw_dungeon():
 			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
 	
 	# Conversion en coordonnées mondiales
-			var trap_pos = tile_map_layer.map_to_local(Vector2i(center_x_grid, center_y_grid))
+			var trou_pos = tile_map_layer.map_to_local(Vector2i(center_x_grid, center_y_grid))
 	
-			var trap = trap_scene.instantiate()
-			trap.position = trap_pos
-			add_child(trap)
+			var trou = trou_scene.instantiate()
+			trou.position = trou_pos
+			add_child(trou)
 		if room.size.x == 9 and room.size.y == 9:
 			var center_x_grid = room.position.x + floor(room.size.x / 2.0)
 			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
@@ -226,3 +227,36 @@ func draw_dungeon():
 			baguette.scale = Vector2(0.009, 0.009)
 			baguette.position = baguette_pos
 			add_child(baguette)
+			var wall_positions = [
+			Vector2i(2, 2), Vector2i(2, 3), Vector2i(3, 4),
+			Vector2i(2, 5), Vector2i(3, 6), Vector2i(5, 6),
+			Vector2i(6, 5), Vector2i(7, 5), Vector2i(6, 2),
+			Vector2i(5, 2), Vector2i(5, 3), Vector2i(4, 3),
+			Vector2i(6, 6), Vector2i(4, 6)
+			]
+	
+	# Placement des murs
+			for pos in wall_positions:
+				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
+				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
+		
+		
+		if room.size.x == 14 and room.size.y == 14:
+			var wall_positions = [
+			Vector2i(4,1), Vector2i(7,1), 
+			Vector2i(4,2), Vector2i(7,2), Vector2i(11,2),
+			Vector2i(7,3), Vector2i(10,3),
+			Vector2i(5,4), Vector2i(7,4), Vector2i(8,4), Vector2i(9,4), Vector2i(10,4),
+			Vector2i(5,5), Vector2i(9,5),
+			Vector2i(5,6), Vector2i(8,6),
+			Vector2i(0,7),Vector2i(1,7), Vector2i(5,7), Vector2i(8,7),
+			Vector2i(2,8), Vector2i(5,8), Vector2i(8,8),
+			Vector2i(3,9), Vector2i(4,9), Vector2i(5,9), Vector2i(8,9), Vector2i(9,9), Vector2i(10,9), Vector2i(11,9),
+			Vector2i(5,10), Vector2i(9,10),
+			Vector2i(3,11), Vector2i(6,11), Vector2i(7,11), Vector2i(8,11), Vector2i(9,11), Vector2i(10,11)]
+	
+	# Place all walls
+			for pos in wall_positions:
+		# Convert to global coordinates and place wall
+				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
+				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
