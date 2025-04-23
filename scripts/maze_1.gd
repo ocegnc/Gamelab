@@ -2,14 +2,23 @@ extends Node2D
 @onready var tile_map_layer = $TileMapLayer
 @onready var player = preload("res://scenes/baguette.tscn")
 @onready var trap_scene = preload("res://scenes/traps.tscn")
-var floor_tile := Vector2i(0,2)
+var floor_tile_top := Vector2i(1,2)
+var floor_tile := Vector2i(2,3)
+var floor_tile_bottom := Vector2i(3,3)
 var wall_tile_top := Vector2i(1,0)
-var wall_tile_bottom := Vector2i(5,0)
-var wall_tile_left_side := Vector2i(0, 0)
-var wall_tile_right_side := Vector2i(2, 0)
-var skull_tile := Vector2i(1, 3)
-var tile_ketchup := Vector2i(3, 0)
-var tile_mayo := Vector2i(4, 0)
+var wall_tile := Vector2i(1,1)
+var wall_tile_broke := Vector2i(5,1)
+var wall_tile_broke_bottom := Vector2i(5,2)
+var wall_tile_left_side := Vector2i(7,2)
+var wall_tile_right_side := Vector2i(9,2)
+var wall_tile_left_side_top := Vector2i(6,3)
+var wall_tile_right_side_top := Vector2i(4,3)
+var tile_ketchup := Vector2i(3, 1)
+var tile_ketchup_bottom := Vector2i(3, 2)
+var tile_mayo := Vector2i(4, 1)
+var tile_mayo_bottom := Vector2i(4, 2)
+var wall_corner_left := Vector2i(7, 0)
+var wall_corner_right := Vector2i(9, 0)
 
 # Constants defining the grid size, cell size, and room parameters
 const WIDTH = 60  # Augmenté pour accommoder 9 salles
@@ -183,54 +192,85 @@ func spawn_player():
 	print("Baguette créée à ", spawn_pos, " dans la salle en haut à droite")
  
 # Draws the dungeon on the screen by creating visual representations of the grid
+
 func draw_dungeon():
 	for x in range(WIDTH):
-		for y in range(HEIGHT):
-			var tile_position = Vector2i(x, y)
-			
-			if grid[x][y] == 0:
-				# Cellule sol
-				tile_map_layer.set_cell(tile_position, 0, floor_tile)
-					
-			elif grid[x][y] == 1:
-				var placed = false
+		var y = 0
+		while y <= HEIGHT - 6:
+			var sequence = []
+			for offset in range(6):
+				sequence.append(grid[x][y + offset])
 
-	# Mur haut si dessous c'est du sol
-				if y < HEIGHT - 1 and grid[x][y + 1] == 0:
-		# Remplacement aléatoire par ketchup ou mayo
-					var rand = randi() % 100  # Valeur entre 0 et 99
-					if rand < 5:
-						tile_map_layer.set_cell(tile_position, 0, tile_ketchup)  # 5% chance
-					elif rand < 10:
-						tile_map_layer.set_cell(tile_position, 0, tile_mayo)     # 5% chance
-					else:
-						tile_map_layer.set_cell(tile_position, 0, wall_tile_top)
-					placed = true
-									
-				# Mur bas si au-dessus c'est du sol
-				elif y > 0 and grid[x][y - 1] == 0:
-					tile_map_layer.set_cell(tile_position, 0, wall_tile_bottom)
-					placed = true
-				
-				# Mur gauche si à droite c'est du sol
-				elif x < WIDTH - 1 and grid[x + 1][y] == 0:
-					tile_map_layer.set_cell(tile_position, 0, wall_tile_left_side)
-					placed = true
-				
-				# Mur droit si à gauche c'est du sol
-				elif x > 0 and grid[x - 1][y] == 0:
-					tile_map_layer.set_cell(tile_position, 0, wall_tile_right_side)
-					placed = true
-				
-				# Sinon, ne rien placer
-				if not placed:
-					tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
-			
+			# Vérifie que c’est bien un motif valide
+			if sequence[3] == 0:
+				# 1) wall_tile_top
+				tile_map_layer.set_cell(Vector2i(x, y), 0, wall_tile_top)
+
+				# 2) décor mural							
+				var rand = randi() % 100
+				var decor_tile = wall_tile
+
+				if rand < 55:
+					decor_tile = wall_tile
+				elif rand < 70:
+					decor_tile = tile_ketchup
+				elif rand < 85:
+					decor_tile = tile_mayo
+				else:
+					decor_tile = wall_tile_broke
+
+				tile_map_layer.set_cell(Vector2i(x, y + 1), 0, decor_tile)
+
+				# 3) top floor selon décor
+				if decor_tile == tile_ketchup:
+					tile_map_layer.set_cell(Vector2i(x, y + 2), 0, tile_ketchup_bottom)
+				elif decor_tile == tile_mayo:
+					tile_map_layer.set_cell(Vector2i(x, y + 2), 0, tile_mayo_bottom)
+				elif decor_tile == wall_tile_broke:
+					tile_map_layer.set_cell(Vector2i(x, y + 2), 0, wall_tile_broke_bottom)
+				else:
+					tile_map_layer.set_cell(Vector2i(x, y + 2), 0, floor_tile_top)
+
+				# Déterminer la hauteur dynamique du sol
+				var floor_start = y + 3
+				var floor_height = 0
+				while floor_start + floor_height < HEIGHT and grid[x][floor_start + floor_height] == 0:
+					floor_height += 1
+
+				# Poser les tuiles de sol
+				for i in range(floor_height - 1):  # -1 pour laisser place au "bottom"
+					tile_map_layer.set_cell(Vector2i(x, floor_start + i), 0, floor_tile)
+
+				# Poser le sol du bas
+				if floor_height > 0:
+					tile_map_layer.set_cell(Vector2i(x, floor_start + floor_height - 1), 0, floor_tile_bottom)
+
+				# Poser un mur de fin s'il y a encore de la place
+				if floor_start + floor_height < HEIGHT:
+					var end_wall_tile = wall_tile if randi() % 100 < 70 else wall_tile_broke
+					tile_map_layer.set_cell(Vector2i(x, floor_start + floor_height), 0, end_wall_tile)
+
+
+				# Sauter tout ce qu’on vient de traiter
+				y += 3 + floor_height + 1  # 3 (haut) + sol + mur de fin
+
 			else:
-				# Cellule ni sol ni mur : vide
-				tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
-
-	
+				# Aucun motif → effacer la colonne actuelle sur cette bande
+				tile_map_layer.set_cell(Vector2i(x, y), 0, Vector2i(-1, -1))
+				y += 1
+		# Ajouter murs latéraux
+	for x in range(1, WIDTH - 1):
+		for y in range(HEIGHT):
+			if tile_map_layer.get_cell_atlas_coords(Vector2i(x - 1, y)) == Vector2i(-1, -1):
+				if grid[x][y] == 0:
+				# Gauche
+					if grid[x - 2][y] == 1:
+						tile_map_layer.set_cell(Vector2i(x - 2, y), 0, wall_tile_left_side)
+						tile_map_layer.set_cell(Vector2i(x - 1, y), 0, wall_tile_left_side_top)
+				# Droite
+					if grid[x + 2][y] == 1:
+						tile_map_layer.set_cell(Vector2i(x + 2, y), 0, wall_tile_right_side)
+						tile_map_layer.set_cell(Vector2i(x + 1, y), 0, wall_tile_right_side_top)
 	# Ajouter les éléments dans les salles
 	for room in rooms:
 		if room.size.x == 25 and room.size.y == 25:
