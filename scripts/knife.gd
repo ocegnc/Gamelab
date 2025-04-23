@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-const SPEED = 200.0
+const SPEED = 1
 var direction = -1
 
-const left_limit = 300
-const right_limit = 800
+const left_limit = 2
+const right_limit = 3
 
 @onready var anim_player = $knifemoove
 
