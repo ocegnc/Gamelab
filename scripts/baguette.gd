@@ -12,11 +12,20 @@ var origin_position: Vector2
 var is_knockback = false
 var knockback_velocity = Vector2.ZERO
 
+<<<<<<< HEAD
 # Système de victoire
 var aliments_ramasses = 0
 var total_aliments = 4
 
 # Références
+=======
+
+var origin_position: Vector2  # Position d'origine
+
+var score = 0
+
+
+>>>>>>> 864c6d9c1027d815550a6a7690fca665ddecdd17
 @onready var anim_player = $Run
 @onready var sprite = $Sprite2D
 
