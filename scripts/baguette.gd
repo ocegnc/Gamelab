@@ -8,8 +8,8 @@ var direction_y = 0  # 1 = bas, -1 = haut, 0 = neutre
 
 var origin_position: Vector2  # Position d'origine
 
-var score = 0
 
+@onready var score = $Score
 @onready var anim_player = $Run
 
 func _ready() -> void: 
@@ -17,6 +17,9 @@ func _ready() -> void:
 		origin_position = global_position
 
 func _physics_process(delta: float) -> void:
+	
+	score.text = "score : " +str(Score.score)
+	
 	# Changer la direction horizontale
 	if Input.is_action_just_pressed("ui_right"):
 		direction_x = 1
