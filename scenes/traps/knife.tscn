@@ -50,10 +50,11 @@ _data = {
 }
 
 [node name="knife" type="CharacterBody2D"]
-position = Vector2(734, 309)
+position = Vector2(441, 320)
 script = ExtResource("1_ue3c7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, -118)
 scale = Vector2(0.110831, 0.110831)
 shape = SubResource("SegmentShape2D_vansh")
 

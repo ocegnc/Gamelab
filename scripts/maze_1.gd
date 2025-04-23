@@ -3,6 +3,8 @@ extends Node2D
 @onready var player = preload("res://scenes/baguette.tscn")
 @onready var trap_scene = preload("res://scenes/traps.tscn")
 @onready var trou_scene = preload("res://scenes/traps/trou.tscn")
+@onready var knife_scene = preload("res://scenes/traps/knife.tscn")
+@onready var aliment_scene = preload("res://scenes/aliments.tscn")
 var floor_tile := Vector2i(2,3)
 var wall_tile_top := Vector2i(1,1)
 var wall_tile_bottom := Vector2i(1,1)
@@ -219,7 +221,33 @@ func draw_dungeon():
 		# Convert to global coordinates and place wall
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
- 
+			var trou_local_pos = Vector2i(0, 8)
+			var trou_global_pos = Vector2i(room.position) + trou_local_pos
+	
+	# Placement précis (en pixels)
+			var trou = trou_scene.instantiate()
+			
+			trou.position = tile_map_layer.map_to_local(trou_global_pos) + Vector2(10, 0)
+			add_child(trou)
+			
+			var aliment_positions = [
+	Vector2i(2, 5),  # Position 1
+	Vector2i(2, 1),  # Position 2
+	Vector2i(9, 1)   # Position 3
+]
+			for pos in aliment_positions:
+	# Conversion en coordonnées globales
+				var global_pos = Vector2i(room.position) + pos
+	
+	# Création et placement de l'aliment
+				var aliment = aliment_scene.instantiate()
+				aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+				aliment.position = tile_map_layer.map_to_local(global_pos)
+	
+	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
+	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
+	
+				add_child(aliment)
  		# Pièges dans les salles moyennes (7x7)
 		if room.size.x == 7 and room.size.y == 7:
  	# Position au centre de la salle en coordonnées grille
@@ -243,7 +271,7 @@ func draw_dungeon():
 			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
 			var baguette_pos = tile_map_layer.map_to_local(Vector2i(center_x_grid, center_y_grid))
 			var baguette = player.instantiate()
-			baguette.scale = Vector2(0.009, 0.009)
+			baguette.scale = Vector2(0.02, 0.02)
 			baguette.position = baguette_pos
 			add_child(baguette)
 			var wall_positions = [
@@ -258,7 +286,7 @@ func draw_dungeon():
 			for pos in wall_positions:
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
- 		
+
  		
 		if room.size.x == 14 and room.size.y == 14:
 			var wall_positions = [
@@ -273,9 +301,10 @@ func draw_dungeon():
 			Vector2i(3,9), Vector2i(4,9), Vector2i(5,9), Vector2i(8,9), Vector2i(9,9), Vector2i(10,9), Vector2i(11,9),
 			Vector2i(5,10), Vector2i(9,10),
 			Vector2i(3,11), Vector2i(6,11), Vector2i(7,11), Vector2i(8,11), Vector2i(9,11), Vector2i(10,11)]
- 	
+			
  	# Place all walls
 			for pos in wall_positions:
  		# Convert to global coordinates and place wall
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
+			
