@@ -82,5 +82,4 @@ sources/0 = SubResource("TileSetAtlasSource_ryspe")
 script = ExtResource("1_vv1ol")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-scale = Vector2(4, 4)
 tile_set = SubResource("TileSet_xfylr")

@@ -679,4 +679,4 @@ libraries = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(209, 103)
 scale = Vector2(0.07, 0.07)
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(15, 15)

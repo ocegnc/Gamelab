@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://beymxkwmr68ex"]
+
+[ext_resource type="Script" path="res://scripts/knife.gd" id="1_ue3c7"]
+[ext_resource type="Texture2D" uid="uid://cis0rihg3va6p" path="res://assets/knife.png" id="2_5xdex"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vansh"]
+a = Vector2(-9.40869, -47.6694)
+b = Vector2(-286.514, -136.433)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_uapf2"]
+a = Vector2(-1.5318, -13.515)
+b = Vector2(35.1417, -13.7499)
+
+[sub_resource type="Animation" id="Animation_fa5sa"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_sifje"]
+resource_name = "knifemoove"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.579871, 0.235292]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f2qve"]
+_data = {
+"RESET": SubResource("Animation_fa5sa"),
+"knifemoove": SubResource("Animation_sifje")
+}
+
+[node name="knife" type="CharacterBody2D"]
+position = Vector2(734, 309)
+script = ExtResource("1_ue3c7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.110831, 0.110831)
+shape = SubResource("SegmentShape2D_vansh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("2_5xdex")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("SegmentShape2D_uapf2")
+
+[node name="knifemoove" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f2qve")
+}
