@@ -8,6 +8,8 @@ var direction_y = 0  # 1 = bas, -1 = haut, 0 = neutre
 
 var origin_position: Vector2  # Position d'origine
 
+var score = 0
+
 @onready var anim_player = $Run
 
 func _ready() -> void: 
