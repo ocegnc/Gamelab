@@ -12,6 +12,10 @@ var origin_position: Vector2
 var is_knockback = false
 var knockback_velocity = Vector2.ZERO
 
+# Système de victoire
+var aliments_ramasses = 0
+var total_aliments = 4
+
 # Références
 @onready var anim_player = $Run
 @onready var sprite = $Sprite2D
@@ -20,6 +24,9 @@ func _ready() -> void:
 	if not has_meta("is_main_instance"):
 		origin_position = global_position
 	add_to_group("player")
+	
+	# Initialisation du système de victoire
+	total_aliments = get_tree().get_nodes_in_group("aliments").size()
 
 func _physics_process(delta: float) -> void:
 	if is_knockback:
@@ -60,31 +67,34 @@ func update_animation():
 	else:
 		anim_player.stop()
 
-func apply_knockback(direction: Vector2, force: float, duration: float = 0.3):  # Durée réduite à 0.3s par défaut
+func apply_knockback(direction: Vector2, force: float, duration: float = 0.3):
 	if is_knockback:
 		return
 	
 	is_knockback = true
 	knockback_velocity = direction * force
-	current_speed = BASE_SPEED * 0.3  # Réduction de vitesse
+	current_speed = BASE_SPEED * 0.3
 	
-	# Effets visuels
 	play_knockback_effects(duration)
 	
-	# Timer pour le retour à la normale
 	await get_tree().create_timer(duration).timeout
 	reset_after_knockback()
 
 func play_knockback_effects(duration: float):
-	# Clignotement rapide
 	var flash_tween = create_tween()
 	flash_tween.tween_property(sprite, "modulate:a", 0.5, 0.05)
 	flash_tween.tween_property(sprite, "modulate:a", 1.0, 0.05)
-	flash_tween.set_loops(int(duration / 0.1))  # Adapte le nombre de clignotements à la durée
-	
-
+	flash_tween.set_loops(int(duration / 0.1))
 
 func reset_after_knockback():
 	current_speed = BASE_SPEED
 	is_knockback = false
 	knockback_velocity = Vector2.ZERO
+
+# Fonction à appeler quand la baguette ramasse un aliment
+func aliment_ramasse():
+	aliments_ramasses += 1
+	print(aliments_ramasses)
+	if aliments_ramasses == 6:
+		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+		print("win")

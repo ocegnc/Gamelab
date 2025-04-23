@@ -3,8 +3,8 @@ extends CharacterBody2D
 const SPEED = 10
 var direction = -1
 
-const left_limit = 15
-const right_limit = 15
+const left_limit = 10
+const right_limit = 10
 
 @export var knockback_force = 300.0
 @export var knockback_duration = 0.5
