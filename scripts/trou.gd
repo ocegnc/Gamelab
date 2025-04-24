@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Area2D
 
 # Variable pour stocker la position d'origine de la baguette
 
@@ -12,8 +12,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_body_entered(body) -> void:
 	if body is CharacterBody2D:
 		print("Touched")
-		if body.has_method("reset_position"):
-			body.reset_position()
+		get_tree().reload_current_scene()

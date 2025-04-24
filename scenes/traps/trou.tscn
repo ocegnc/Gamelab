@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmdh5wjpewhf"]
+
+[ext_resource type="Script" path="res://scripts/trou.gd" id="1_k7cic"]
+[ext_resource type="Texture2D" uid="uid://bjq7rswmvpq2j" path="res://assets/Trou.png" id="2_pwjdf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rd83t"]
+radius = 9.05539
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u1t1f"]
+radius = 12.0416
+
+[node name="Trou" type="RigidBody2D"]
+mass = 0.001
+gravity_scale = 0.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.0512434, 0.00198597, 0.113446, 1)
+position = Vector2(0, -0.999999)
+scale = Vector2(-0.134481, -0.132749)
+texture = ExtResource("2_pwjdf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_rd83t")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(0, -1)
+script = ExtResource("1_k7cic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CircleShape2D_u1t1f")
+
+[connection signal="area_entered" from="Area2D2" to="Area2D2" method="_on_area_entered"]
+[connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

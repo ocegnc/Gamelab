@@ -19,9 +19,12 @@ texture = ExtResource("2_nwck2")
 10:0/0 = 0
 11:0/0 = 0
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8, -8, 8)
 1:1/0 = 0
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8)
+2:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(8, 3.125, -8, 8, -8, 8, -8, -8, 8, -8)
 3:1/0 = 0
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:1/0 = 0
@@ -82,5 +85,4 @@ sources/0 = SubResource("TileSetAtlasSource_ryspe")
 script = ExtResource("1_vv1ol")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-scale = Vector2(4, 4)
 tile_set = SubResource("TileSet_xfylr")

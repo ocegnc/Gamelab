@@ -1,48 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb8juvbd2xw1j"]
-
-[ext_resource type="PackedScene" uid="uid://d3uxw8sf6s8eg" path="res://scenes/aliments.tscn" id="2_jpohk"]
-[ext_resource type="PackedScene" uid="uid://cfts2gx72hn72" path="res://scenes/traps.tscn" id="4_cnxh8"]
-[ext_resource type="PackedScene" uid="uid://tkg17k5p8r1u" path="res://scenes/Maze1.tscn" id="4_nulsm"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtqu3"]
-distance = -1351.0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qykbl"]
-normal = Vector2(0, 1)
-distance = -333.0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uspvn"]
-normal = Vector2(1, 0)
-distance = -279.0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u0kfm"]
-normal = Vector2(-1, 0)
-distance = -4237.0
+[gd_scene format=3 uid="uid://bb8juvbd2xw1j"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(576, 322)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1836, 1018)
-shape = SubResource("WorldBoundaryShape2D_dtqu3")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_qykbl")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-286, 32)
-shape = SubResource("WorldBoundaryShape2D_uspvn")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("WorldBoundaryShape2D_u0kfm")
-
-[node name="aliments" parent="." instance=ExtResource("2_jpohk")]
-position = Vector2(306, 62)
-scale = Vector2(0.2, 0.2)
-
-[node name="Traps" parent="." instance=ExtResource("4_cnxh8")]
-position = Vector2(171, 14)
-
-[node name="Maze1" parent="." instance=ExtResource("4_nulsm")]

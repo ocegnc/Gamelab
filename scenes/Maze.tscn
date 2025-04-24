@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmy2gh36pf4x6"]
+[gd_scene load_steps=6 format=3 uid="uid://c4jfk7nfqfpx6"]
 
 [ext_resource type="Texture2D" uid="uid://dpek53h34lmea" path="res://assets/Maze_proto.png" id="1_c0wnl"]
-[ext_resource type="Script" path="res://scripts/maze.gd" id="2_afpr5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3kuji"]
 resource_name = "00"
@@ -5653,9 +5652,11 @@ physics_layer_0/collision_layer = 0
 sources/1 = SubResource("TileSetAtlasSource_xko1a")
 sources/0 = SubResource("TileSetAtlasSource_3kuji")
 
+[sub_resource type="GDScript" id="GDScript_p3vix"]
+
 [node name="Maze256" type="TileMap"]
 tile_set = SubResource("TileSet_frilr")
 rendering_quadrant_size = 128
 collision_animatable = true
 format = 2
-script = ExtResource("2_afpr5")
+script = SubResource("GDScript_p3vix")
