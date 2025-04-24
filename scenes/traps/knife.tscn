@@ -5,11 +5,11 @@
 [ext_resource type="Script" path="res://scripts/knifearea2D.gd" id="3_xu653"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvt7i"]
-size = Vector2(5206.12, 306.773)
+size = Vector2(2345.91, 99.2502)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4b5i1"]
-a = Vector2(-244, -37)
-b = Vector2(38, 46)
+a = Vector2(-248, -40)
+b = Vector2(52, 51)
 
 [sub_resource type="Animation" id="Animation_fa5sa"]
 length = 0.001
@@ -54,7 +54,7 @@ position = Vector2(441, 320)
 script = ExtResource("1_ue3c7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(35.5, -119)
+position = Vector2(-72, -119.5)
 scale = Vector2(0.110831, 0.110831)
 shape = SubResource("RectangleShape2D_uvt7i")
 
@@ -66,7 +66,7 @@ position = Vector2(-2, 1)
 script = ExtResource("3_xu653")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(-42, -97)
+position = Vector2(-46, -97)
 shape = SubResource("SegmentShape2D_4b5i1")
 
 [node name="knifemoove" type="AnimationPlayer" parent="."]

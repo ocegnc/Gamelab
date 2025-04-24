@@ -265,7 +265,12 @@ func draw_dungeon():
 		# Convert to global coordinates and place wall
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
-
+			var aliment_pos = Vector2i(4, 3)  # Position centrale stratégique
+			var aliment_global_pos = Vector2i(room.position.x + aliment_pos.x, room.position.y + aliment_pos.y)
+			var aliment = aliment_scene.instantiate()
+			aliment.scale = Vector2(0.1, 0.1)
+			aliment.position = tile_map_layer.map_to_local(aliment_global_pos)
+			add_child(aliment)
 		if room.size.x == 9 and room.size.y == 9:
 			var center_x_grid = room.position.x + floor(room.size.x / 2.0)
 			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
@@ -308,17 +313,34 @@ func draw_dungeon():
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile_left_side)
 
-			var knife_local_pos = Vector2i(4, 3)
+			var knife_local_pos = Vector2i(5, 4)
 			var knife_global_pos = Vector2i(room.position) + knife_local_pos
 
 			var knife = knife_scene.instantiate()
 			add_child(knife)  # Ajout d'abord !
-			knife.scale = Vector2(0.1, 0.1)  # Échelle plus raisonnable
+			knife.scale = Vector2(0.08, 0.08)  # Échelle plus raisonnable
 			knife.position = tile_map_layer.map_to_local(knife_global_pos)
 
 # Debug
 			print("Knife placé à : ", knife.position)
+			var trou_pos = Vector2i(room.position.x + 12, room.position.y + 12)
+			var trou = trou_scene.instantiate()
+			trou.position = tile_map_layer.map_to_local(trou_pos)
+			add_child(trou)
 
+	# 2. Aliments aux positions stratégiques
+			var aliment_positions = [
+		Vector2i(2,2),  # Haut-gauche
+		Vector2i(12,3), # Haut-droite
+		Vector2i(6,8),  # Centre
+		Vector2i(3,12)]
+	
+			for pos in aliment_positions:
+				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
+				var aliment = aliment_scene.instantiate()
+				aliment.scale = Vector2(0.1, 0.1)
+				aliment.position = tile_map_layer.map_to_local(global_pos)
+				add_child(aliment)
 
 
 
