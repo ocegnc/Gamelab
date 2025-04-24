@@ -12,7 +12,12 @@ var origin_position: Vector2
 var is_knockback = false
 var knockback_velocity = Vector2.ZERO
 
-# Références
+
+var origin_position: Vector2  # Position d'origine
+
+var score = 0
+
+
 @onready var anim_player = $Run
 @onready var sprite = $Sprite2D
 
