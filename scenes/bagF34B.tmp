@@ -682,9 +682,8 @@ position = Vector2(209, 103)
 scale = Vector2(0.07, 0.07)
 
 [node name="Score" type="Label" parent="Camera2D"]
-offset_left = 3200.0
-offset_top = -20500.0
-offset_right = 40657.0
-offset_bottom = -5386.0
-theme_override_font_sizes/font_size = 5900
+offset_left = 6343.0
+offset_top = -3571.0
+offset_right = 7469.0
+offset_bottom = -3171.0
 text = "Score: 0"

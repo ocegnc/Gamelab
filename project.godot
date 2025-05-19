@@ -18,7 +18,7 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-Score="*res://scripts/score.gd"
+Global="*res://scripts/Global.gd"
 
 [dotnet]
 
