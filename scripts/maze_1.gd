@@ -8,7 +8,6 @@ extends Node2D
 @onready var label: Label
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
-var floor_tile_top := Vector2i(1,2)
 var floor_tile_bottom := Vector2i(3,3)
 var wall_tile_top := Vector2i(1,0)
 var wall_tile_bottom := Vector2i(8,2)
@@ -212,7 +211,18 @@ func is_valid_tile(tile: Vector2i) -> bool:
 
 func draw_dungeon():
 	
-	var baguette_pos = tile_map_layer.map_to_local(Vector2i(15, 10))
+	var fixed_room = FIXED_ROOMS[0]  # [x, y, width, height]
+	var room_x = fixed_room[0]
+	var room_y = fixed_room[1]
+	var room_width = fixed_room[2]
+	var room_height = fixed_room[3]
+
+	var center_x = room_x + room_width / 2
+	var center_y = room_y + room_height / 2
+
+	var tile_coords = Vector2i(center_x, center_y)
+	var baguette_pos = tile_map_layer.map_to_local(tile_coords)
+
 	var baguette = player.instantiate()
 	baguette.scale = Vector2(0.02, 0.02)
 	baguette.position = baguette_pos
