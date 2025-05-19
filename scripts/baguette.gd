@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	score.text = "score : " +str(Score.score)
+	#score.text = "score : " +str(Score.score)
 	
 	# Changer la direction horizontale
 	if is_knockback:
