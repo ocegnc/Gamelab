@@ -5,14 +5,7 @@ extends Node2D
 @onready var trou_scene = preload("res://scenes/traps/trou.tscn")
 @onready var knife_scene = preload("res://scenes/traps/knife.tscn")
 @onready var aliment_scene = preload("res://scenes/aliments.tscn")
-#var floor_tile := Vector2i(2,3)
-#var wall_tile_top := Vector2i(1,1)
-#var wall_tile_bottom := Vector2i(1,1)
-#var wall_tile_left_side := Vector2i(0, 1)
-#var wall_tile_right_side := Vector2i(2, 1)
-#var tile_ketchup := Vector2i(3, 1)
-#var tile_mayo := Vector2i(3, 1)
-var floor_tile_top := Vector2i(1,2)
+@onready var label: Label
 var floor_tile := Vector2i(2,3)
 var floor_tile_bottom := Vector2i(3,3)
 var wall_tile_top := Vector2i(1,0)
@@ -36,6 +29,7 @@ var wall_corner_right3 := Vector2i(10, 2)
 var wall_corner_left3 := Vector2i(11, 2)
 var wall_angle_right := Vector2i(10, 4)
 var wall_angle_left := Vector2i(11, 4)
+
 
  # Constants defining the grid size, cell size, and room parameters
 const WIDTH = 80  # Augmenté pour accommoder 9 salles
@@ -74,7 +68,25 @@ func _ready():
 	initialize_grid()
 	generate_dungeon()
 	draw_dungeon()
- 
+	label = Label.new()
+	label.name = "TimerLabel"
+	label.text = "00:00:00"
+	label.position = Vector2(50, 50)  # Position en pixels
+	label.add_theme_font_size_override("font_size", 30)
+	
+	# Option : Ajoutez un style rouge pour debug
+	label.add_theme_color_override("font_color", Color.WHITE)
+	
+	add_child(label)
+	
+	# Mettez à jour dans _process
+var time = 0.0
+func _process(delta):
+	time += delta
+	var msec = fmod(time, 1) * 100
+	var sec = fmod(time, 60)
+	var min = fmod(time, 3600) / 60
+	label.text = "%02d:%02d:%02d" % [min, sec, msec]
 func initialize_grid():
 	for x in range(WIDTH):
 		grid.append([])
@@ -577,6 +589,13 @@ func draw_dungeon():
 			var aliment_positions = [
 	Vector2i(7, 7),  # Position 1
 ]
+			var knife_local_pos = Vector2i(0, 7)
+			var knife_global_pos = Vector2i(room.position) + knife_local_pos
+
+			var knife = knife_scene.instantiate()
+			add_child(knife)  # Ajout d'abord !
+			knife.scale = Vector2(0.08, 0.08)  # Échelle plus raisonnable
+			knife.position = tile_map_layer.map_to_local(knife_global_pos)
 			for pos in aliment_positions:
 	# Conversion en coordonnées globales
 				var global_pos = Vector2i(room.position) + pos
