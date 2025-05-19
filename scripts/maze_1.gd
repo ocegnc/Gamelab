@@ -8,6 +8,7 @@ extends Node2D
 @onready var label: Label
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
+var floor_tile_top := Vector2i(1,2)
 var floor_tile_bottom := Vector2i(3,3)
 var wall_tile_top := Vector2i(1,0)
 var wall_tile_bottom := Vector2i(8,2)
