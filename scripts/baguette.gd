@@ -116,12 +116,11 @@ func reset_after_knockback():
 	current_speed = BASE_SPEED
 	is_knockback = false
 	knockback_velocity = Vector2.ZERO
-
+																																																																																																		
 # Fonction à appeler quand la baguette ramasse un aliment
 func aliment_ramasse():
 	aliments_ramasses += 1
 	Global.score+=1
-	#print(Global.score)
 	if aliments_ramasses == 6:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 		print("win")

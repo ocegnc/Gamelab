@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://scripts/knifearea2D.gd" id="3_xu653"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvt7i"]
-size = Vector2(3166.98, 216.546)
+size = Vector2(5594.1, 288.728)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4b5i1"]
-a = Vector2(-248, -40)
+a = Vector2(-251, -41)
 b = Vector2(44, 48)
 
 [sub_resource type="Animation" id="Animation_fa5sa"]
@@ -54,7 +54,7 @@ position = Vector2(441, 320)
 script = ExtResource("1_ue3c7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-26.4999, -120)
+position = Vector2(12, -119)
 scale = Vector2(0.110831, 0.110831)
 shape = SubResource("RectangleShape2D_uvt7i")
 
