@@ -17,6 +17,13 @@ var aliments_ramasses = 0
 var total_aliments = 4
 
 # Références
+
+
+
+var score = 0
+
+
+
 @onready var anim_player = $Run
 @onready var sprite = $Sprite2D
 
