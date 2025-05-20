@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	#score.text = "Score : " + str(Global.score)
-	print(score)
+	#print(score)
 	
 	handle_movement_input()
 	update_speed(delta)
@@ -123,7 +123,5 @@ func aliment_ramasse():
 
 	aliments_ramasses += 1                          
 	GameState.instance.add_score(1)
-	
-
-	if aliments_ramasses == 6:
-		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+	#if aliments_ramasses == 6:
+		#get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
