@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+@onready var GameState = preload("res://scripts/game_state.gd")
 # Variables de mouvement
 var current_speed = 50.0
 const BASE_SPEED = 50.0
@@ -119,9 +119,12 @@ func reset_after_knockback():
 	knockback_velocity = Vector2.ZERO
 																																																																																																		
 # Fonction à appeler quand la baguette ramasse un aliment
+
 func aliment_ramasse():
-	aliments_ramasses += 1
-	Global.score+=1
+
+	aliments_ramasses += 1                          
+	GameState.instance.add_score(1)
+	
+
 	if aliments_ramasses == 6:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
-		print("win")

@@ -5,7 +5,9 @@ extends Node2D
 @onready var trou_scene = preload("res://scenes/traps/trou.tscn")
 @onready var knife_scene = preload("res://scenes/traps/knife.tscn")
 @onready var aliment_scene = preload("res://scenes/aliments.tscn")
+@onready var GameState = preload("res://scripts/game_state.gd")
 @onready var label: Label
+@onready var scorelabel : Label
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
 var floor_tile_bottom := Vector2i(3,3)
@@ -73,16 +75,29 @@ func _ready():
 	initialize_grid()
 	generate_dungeon()
 	draw_dungeon()
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 1
+	scorelabel=Label.new()
+	scorelabel.name="ScoreLabel"
+	scorelabel.text="Score: 0"
+	scorelabel.position = Vector2(20, 20)  # Position différente du timer
+	scorelabel.add_theme_font_size_override("font_size", 30)
+	scorelabel.add_theme_color_override("font_color", Color.WHITE)
+	GameState.instance.score_updated.connect(_on_score_updated)
+	scorelabel.text = "Score: 0"
+	
+	
 	label = Label.new()
 	label.name = "TimerLabel"
 	label.text = "00:00:00"
-	label.position = Vector2(50, 50)  # Position en pixels
+	label.position = Vector2(get_viewport().size.x / 2 - 50, 20)  # Position centrée en haut
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
 	label.add_theme_font_size_override("font_size", 30)
-	
-	# Option : Ajoutez un style rouge pour debug
 	label.add_theme_color_override("font_color", Color.WHITE)
-	
-	add_child(label)
+	canvas_layer.add_child(scorelabel)
+	canvas_layer.add_child(label)
+	add_child(canvas_layer)
 	
 	# Mettez à jour dans _process
 var time = 0.0
@@ -97,7 +112,23 @@ func initialize_grid():
 		grid.append([])
 		for y in range(HEIGHT):
 			grid[x].append(1)
- 
+
+
+
+func _on_score_updated(new_score):
+	if scorelabel:
+		scorelabel.text = "Score: %d" % new_score
+		print("Score mis à jour: ", new_score) 
+
+
+
+
+func update_score(value: int):
+	if scorelabel:
+		scorelabel.text = "Score: %d" % value
+
+
+
 func generate_dungeon():
 	# Génération des salles avec taille carrée aléatoire
 	for pos in positions:
