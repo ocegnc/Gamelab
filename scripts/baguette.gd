@@ -36,8 +36,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	
-	#score.text= Global.score
-	score.text = "Score : " + str(Global.score)
+	#score.text = "Score : " + str(Global.score)
 	print(score)
 	
 	handle_movement_input()
