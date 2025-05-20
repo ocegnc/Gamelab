@@ -4,7 +4,8 @@ extends Node2D
 @onready var trap_scene = preload("res://scenes/traps.tscn")
 @onready var trou_scene = preload("res://scenes/traps/trou.tscn")
 @onready var knife_scene = preload("res://scenes/traps/knife.tscn")
-@onready var aliment_scene = preload("res://scenes/aliments.tscn")
+@onready var aliment_scene = preload("res://scenes/good-aliments.tscn")
+@onready var bad_aliment_scene = preload("res://scenes/bad-aliments.tscn")
 @onready var GameState = preload("res://scripts/game_state.gd")
 @onready var label: Label
 @onready var scorelabel : Label
@@ -89,7 +90,7 @@ func _ready():
 	
 	label = Label.new()
 	label.name = "TimerLabel"
-	label.text = "00:00:00"
+	label.text = "01:30:00"
 	label.position = Vector2(get_viewport().size.x / 2 - 50, 20)  # Position centrée en haut
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
@@ -100,13 +101,20 @@ func _ready():
 	add_child(canvas_layer)
 	
 	# Mettez à jour dans _process
-var time = 0.0
+var time = 90.0
 func _process(delta):
-	time += delta
+	time -= delta
 	var msec = fmod(time, 1) * 100
 	var sec = fmod(time, 60)
 	var min = fmod(time, 3600) / 60
 	label.text = "%02d:%02d:%02d" % [min, sec, msec]
+	if label.text=="00:00:00":
+		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+
+func make_loose_time():
+	time -= 5   
+
+	
 func initialize_grid():
 	for x in range(WIDTH):
 		grid.append([])
@@ -448,6 +456,7 @@ func draw_dungeon():
 	Vector2i(2, 1),  # Position 2
 	Vector2i(9, 1)   # Position 3
 ]
+
 			for pos in aliment_positions:
 	# Conversion en coordonnées globales
 				var global_pos = Vector2i(room.position) + pos
@@ -461,7 +470,27 @@ func draw_dungeon():
 	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
 	
 				add_child(aliment)
- 		# Pièges dans les salles moyennes (7x7)
+ 		
+		#IDEM pour les maubais aliments
+			var bad_aliment_positions = [
+	Vector2i(7, 4),
+]
+			for pos in bad_aliment_positions:
+	# Conversion en coordonnées globales
+				var global_pos = Vector2i(room.position) + pos
+	
+	# Création et placement de l'aliment
+				var bad_aliment = bad_aliment_scene.instantiate()
+				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
+	
+	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
+	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
+	
+				add_child(bad_aliment)
+		
+		
+		# Pièges dans les salles moyennes (7x7)
 		if room.size.x == 7 and room.size.y == 7:
  	# Position au centre de la salle en coordonnées grille
 			var wall_positions = [
@@ -485,6 +514,24 @@ func draw_dungeon():
 			aliment.position = tile_map_layer.map_to_local(aliment_global_pos)
 			add_child(aliment)
 			
+			
+				#IDEM pour les maubais aliments
+			var bad_aliment_positions = [
+	Vector2i(2, 4),
+]
+			for pos in bad_aliment_positions:
+	# Conversion en coordonnées globales
+				var global_pos = Vector2i(room.position) + pos
+	
+	# Création et placement de l'aliment
+				var bad_aliment = bad_aliment_scene.instantiate()
+				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
+	
+				add_child(bad_aliment)
+				
+			
+			
 		if room.size.x == 9 and room.size.y == 9:
 			var wall_positions = [
  			Vector2i(2, 2), Vector2i(2, 3), Vector2i(3, 4),
@@ -493,6 +540,22 @@ func draw_dungeon():
  			Vector2i(5, 2), Vector2i(5, 3), Vector2i(4, 3),
  			Vector2i(6, 6), Vector2i(4, 6)
 			]
+			
+					#IDEM pour les maubais aliments
+			var bad_aliment_positions = [
+	Vector2i(4, 2),
+	Vector2i(5, 7),
+]
+			for pos in bad_aliment_positions:
+	# Conversion en coordonnées globales
+				var global_pos = Vector2i(room.position) + pos
+	
+	# Création et placement de l'aliment
+				var bad_aliment = bad_aliment_scene.instantiate()
+				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
+	
+				add_child(bad_aliment)
  	
  	# Placement des murs
 			for pos in wall_positions:

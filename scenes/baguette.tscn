@@ -620,7 +620,6 @@ remote_path = NodePath("../../../../../Body/Left-arm")
 [node name="RightArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Trunk"]
 position = Vector2(146, 10)
 rotation = -0.204398
-scale = Vector2(1, 1)
 rest = Transform2D(0.979183, -0.202978, 0.202978, 0.979183, 146, 10)
 metadata/_local_pose_override_enabled_ = true
 

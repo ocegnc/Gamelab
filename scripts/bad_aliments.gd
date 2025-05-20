@@ -1,24 +1,26 @@
 extends Area2D
 
 @onready var sprite = $AnimatedSprite2D
+#var maze = preload("res://scenes/Maze1.tscn").instantiate()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	sprite.frame = randi_range(0, 19)
 	connect("body_entered",_on_body_entered)
-	add_to_group("aliments")
+	add_to_group("bad-aliments")
 
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-func _on_body_entered(body: Node2D,) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
-		sprite.visible = false  # Cache le sprite
-		queue_free()  # Supprime complètement le node
-	if (body.name == "Baguette"):
-		#body.score+=1
-		print("score:",body.score)
-		body.aliment_ramasse()
+		print("BEURKKKKK")
+		sprite.visible = false
+		#maze.make_loose_time()
+		queue_free()
+
 		
