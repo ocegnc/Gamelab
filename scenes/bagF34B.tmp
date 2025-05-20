@@ -632,7 +632,7 @@ remote_path = NodePath("../../../../../Body/Right-arm")
 
 [node name="RightLeg" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Trunk"]
 position = Vector2(27.6832, 271.679)
-rotation = -0.0923846
+rotation = -0.0923841
 scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.995734, -0.0922527, 0.0922527, 0.995734, 27.6832, 271.679)
 metadata/_local_pose_override_enabled_ = true
@@ -681,10 +681,9 @@ libraries = {
 position = Vector2(209, 103)
 scale = Vector2(0.07, 0.07)
 
-[node name="Score" type="Label" parent="."]
-offset_left = 718.0
-offset_top = -1385.0
-offset_right = 3314.0
-offset_bottom = -380.0
-theme_override_font_sizes/font_size = 500
+[node name="Score" type="Label" parent="Camera2D"]
+offset_left = 6343.0
+offset_top = -3571.0
+offset_right = 7469.0
+offset_bottom = -3171.0
 text = "Score: 0"

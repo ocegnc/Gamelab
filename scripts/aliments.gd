@@ -18,7 +18,7 @@ func _on_body_entered(body: Node2D,) -> void:
 		sprite.visible = false  # Cache le sprite
 		queue_free()  # Supprime complètement le node
 	if (body.name == "Baguette"):
-		body.score+=1
+		#body.score+=1
 		print("score:",body.score)
 		body.aliment_ramasse()
 		

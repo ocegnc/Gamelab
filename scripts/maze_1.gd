@@ -37,23 +37,27 @@ var wall_angle_left := Vector2i(11, 4)
  # Constants defining the grid size, cell size, and room parameters
 const WIDTH = 80  # Augmenté pour accommoder 9 salles
 const HEIGHT = 80
-const FIXED_ROOMS = [
+var FIXED_ROOMS = []
+var sizes = [7, 8, 9, 11, 14]
+var positions = [
  	# Format: [x, y, width, height]
  	# Première ligne (haut)
- 	[10, 10, 9, 9],    # Haut-gauche
- 	[26, 10, 14, 14],    # Haut-centre
- 	[42, 10, 8, 8],    # Haut-droite
+ 	[5, 5],    # Haut-gauche
+ 	[25, 5],    # Haut-centre
+ 	[45, 5],    # Haut-droite
  
  	# Deuxième ligne (milieu)
- 	[10, 26, 7, 7],    # Centre-gauche
- 	[26, 26, 11, 11],  # Grande salle centrale
- 	[42, 26, 7, 7],    # Centre-droite
+ 	[5, 26],    # Centre-gauche
+ 	[25, 26],  # Grande salle centrale
+ 	[45, 26],    # Centre-droite
  
  	# Troisième ligne (bas)
- 	[10, 42, 7, 7],    # Bas-gauche
- 	[26, 42, 7, 7],    # Bas-centre
- 	[42, 42, 7, 7]     # Bas-droite
+ 	[5, 45],    # Bas-gauche
+ 	[25, 45],    # Bas-centre
+ 	[45, 45]     # Bas-droite
  ]
+
+	
 const ROOM_TEMPLATES = [
  	# Format: [largeur, hauteur]
  	[5, 5],  # Petite salle carrée
@@ -126,6 +130,13 @@ func update_score(value: int):
 
 
 func generate_dungeon():
+	# Génération des salles avec taille carrée aléatoire
+	for pos in positions:
+		var size = sizes[randi() % sizes.size()]
+		FIXED_ROOMS.append([pos[0], pos[1], size, size])
+
+	print("FIXED_ROOMS = ", FIXED_ROOMS)
+	
 	# Place toutes les salles d'abord
 	for room_data in FIXED_ROOMS:
 		var room = Rect2(room_data[0], room_data[1], room_data[2], room_data[3])
@@ -220,55 +231,6 @@ func connect_rooms(room1, room2, corridor_width=1):
 				if current.x + i >= 0 and current.x + i < WIDTH and current.y + j >= 0 and current.y + j < HEIGHT:
 					grid[current.x + i][current.y + j] = 0  # Set cells to floor
  
- # Draws the dungeon on the screen by creating visual representations of the grid
-#func draw_dungeon():
- #
-	#for x in range(WIDTH):
-		#for y in range(HEIGHT):
-			#var tile_position = Vector2i(x, y)
- #
-			#if grid[x][y] == 0:
- 				## Cellule sol
-				#tile_map_layer.set_cell(tile_position, 0, floor_tile)
- #
-			#elif grid[x][y] == 1:
-				#var placed = false
- #
- 	## Mur haut si dessous c'est du sol
-				#if y < HEIGHT - 1 and grid[x][y + 1] == 0:
-		## Remplacement aléatoire par ketchup ou mayo
-					#var rand = randi() % 100  # Valeur entre 0 et 99
-					#if rand < 5:
-						#tile_map_layer.set_cell(tile_position, 0, tile_ketchup)  # 5% chance
-					#elif rand < 10:
-						#tile_map_layer.set_cell(tile_position, 0, tile_mayo)     # 5% chance
-					#else:
-						#tile_map_layer.set_cell(tile_position, 0, wall_tile_top)
-					#placed = true
- #
- 				## Mur bas si au-dessus c'est du sol
-				#elif y > 0 and grid[x][y - 1] == 0:
-					#tile_map_layer.set_cell(tile_position, 0, wall_tile)
-					#placed = true
- #
- 				## Mur gauche si à droite c'est du sol
-				#elif x < WIDTH - 1 and grid[x + 1][y] == 0:
-					#tile_map_layer.set_cell(tile_position, 0, wall_tile_left_side)
-					#placed = true
- #
- 				## Mur droit si à gauche c'est du sol
-				#elif x > 0 and grid[x - 1][y] == 0:
-					#tile_map_layer.set_cell(tile_position, 0, wall_tile_right_side)
-					#placed = true
- #
- 				## Sinon, ne rien placer
-				#if not placed:
-					#tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
- #
-			#else:
- 				## Cellule ni sol ni mur : vide
-				#tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
- 
 func is_floor_edge_tile(tile: Vector2i) -> bool:
 	return tile == floor_tile_top or tile == tile_ketchup_bottom or tile == tile_mayo_bottom or tile == wall_tile_broke_bottom
 
@@ -279,6 +241,24 @@ func is_valid_tile(tile: Vector2i) -> bool:
 	return tile != Vector2i(-1, -1)
 
 func draw_dungeon():
+	
+	var fixed_room = FIXED_ROOMS[0]  # [x, y, width, height]
+	var room_x = fixed_room[0]
+	var room_y = fixed_room[1]
+	var room_width = fixed_room[2]
+	var room_height = fixed_room[3]
+
+	var center_x = room_x + room_width / 2
+	var center_y = room_y + room_height / 2
+
+	var tile_coords = Vector2i(center_x, center_y)
+	var baguette_pos = tile_map_layer.map_to_local(tile_coords)
+
+	var baguette = player.instantiate()
+	baguette.scale = Vector2(0.02, 0.02)
+	baguette.position = baguette_pos
+	add_child(baguette)
+			
 	for x in range(WIDTH):
 		var y = 0
 		while y <= HEIGHT - 6:
@@ -405,33 +385,6 @@ func draw_dungeon():
 					tile_map_layer.set_cell(tile_position, 0, wall_tile_right_side)
 					placed = true
 
-						
-	#for x in range(WIDTH):
-		#for y in range(HEIGHT):
-			#var tile_position = Vector2i(x, y)
-			#if grid[x][y] == 0:
- 				## Cellule sol
-				#tile_map_layer.set_cell(tile_position, 0, floor_tile)
- #
-			#elif grid[x][y] == 1:
-				#var placed = false
-				## Mur gauche si à droite c'est du sol
-				#if x < WIDTH - 1 and grid[x + 1][y] == 0:
-					#tile_map_layer.set_cell(tile_position, 0, wall_tile_left_side)
-					#placed = true
- #
- 				## Mur droit si à gauche c'est du sol
-				#if x > 0 and grid[x - 1][y] == 0:
-					#tile_map_layer.set_cell(tile_position, 0, wall_tile_right_side)
-					#placed = true
- 
- 				## Sinon, ne rien placer
-				#if not placed:
-					#tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
- 
-			#else:
- 				## Cellule ni sol ni mur : vide
-				#tile_map_layer.set_cell(tile_position, 0, Vector2i(-1, -1))
 			
  	# Ajouter les éléments dans les salles
 	for room in rooms:
@@ -466,7 +419,7 @@ func draw_dungeon():
 	
 		if room.size.x == 11 and room.size.y == 11:
 			var wall_positions = [
-			Vector2i(4,0), Vector2i(4,1), Vector2i(4,2), Vector2i(4,3),
+			Vector2i(4,1), Vector2i(4,2), Vector2i(4,3),
 			Vector2i(3,3), Vector2i(2,3), Vector2i(2,4),
 			Vector2i(5,4), Vector2i(6,4), Vector2i(8,4),
 			Vector2i(7,5),Vector2i(9,3),
@@ -513,11 +466,11 @@ func draw_dungeon():
  	# Position au centre de la salle en coordonnées grille
 			var wall_positions = [
 		Vector2i(1,1), Vector2i(2,1),Vector2i(3,1), Vector2i(3,2),
-		Vector2i(5,2), Vector2i(6,2), Vector2i(7,2), Vector2i(7,1), Vector2i(8,1),  # Note: (8,1) is outside 7x7
+		Vector2i(5,2), Vector2i(6,2),  # Note: (8,1) is outside 7x7
 		Vector2i(2,3), Vector2i(5,3),
-		Vector2i(3,4), Vector2i(5,4), Vector2i(7,4),
-		Vector2i(2,5),Vector2i(2,6), Vector2i(7,5),
-		Vector2i(5,6), Vector2i(7,6)
+		Vector2i(3,4), Vector2i(5,4),
+		Vector2i(2,5),Vector2i(2,6),
+		Vector2i(5,6),
 	]
 	
 	# Place all walls
@@ -531,14 +484,8 @@ func draw_dungeon():
 			aliment.scale = Vector2(0.1, 0.1)
 			aliment.position = tile_map_layer.map_to_local(aliment_global_pos)
 			add_child(aliment)
+			
 		if room.size.x == 9 and room.size.y == 9:
-			var center_x_grid = room.position.x + floor(room.size.x / 2.0)
-			var center_y_grid = room.position.y + floor(room.size.y / 2.0)
-			var baguette_pos = tile_map_layer.map_to_local(Vector2i(center_x_grid, center_y_grid))
-			var baguette = player.instantiate()
-			baguette.scale = Vector2(0.02, 0.02)
-			baguette.position = baguette_pos
-			add_child(baguette)
 			var wall_positions = [
  			Vector2i(2, 2), Vector2i(2, 3), Vector2i(3, 4),
  			Vector2i(2, 5), Vector2i(3, 6), Vector2i(5, 6),
@@ -561,7 +508,7 @@ func draw_dungeon():
 			Vector2i(5,4), Vector2i(7,4), Vector2i(8,4), Vector2i(9,4), Vector2i(10,4),
 			Vector2i(5,5), Vector2i(9,5),
 			Vector2i(5,6), Vector2i(8,6),
-			Vector2i(0,7),Vector2i(1,7), Vector2i(5,7), Vector2i(8,7),
+			Vector2i(1,7), Vector2i(5,7), Vector2i(8,7),
 			Vector2i(2,8), Vector2i(5,8), Vector2i(8,8),
 			Vector2i(3,9), Vector2i(4,9), Vector2i(5,9), Vector2i(8,9), Vector2i(9,9), Vector2i(10,9), Vector2i(11,9),
 			Vector2i(5,10), Vector2i(9,10),
@@ -606,7 +553,7 @@ func draw_dungeon():
 
 		if room.size.x == 8 and room.size.y == 8:
 			var wall_positions = [
-		Vector2i(3,0), Vector2i(3,1), 
+		Vector2i(3,1), 
 		Vector2i(6,1), Vector2i(6,2),
 		Vector2i(3,3), Vector2i(4,3), Vector2i(5,3),
 		Vector2i(3,4), Vector2i(5,4),
