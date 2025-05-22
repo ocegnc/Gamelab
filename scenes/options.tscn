@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnj1l0h81drai"]
+[gd_scene load_steps=9 format=3 uid="uid://dnj1l0h81drai"]
 
 [ext_resource type="Script" path="res://scripts/options.gd" id="1_0o6v7"]
+[ext_resource type="Texture2D" uid="uid://d0n1k6ywbcbd7" path="res://assets/Background Menu.png" id="2_1fpql"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gib3i"]
+texture = ExtResource("2_1fpql")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kici5"]
 
@@ -25,6 +27,15 @@ shadow_size = 5
 shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fycf"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2xt78"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -79,11 +90,13 @@ text = "🏠"
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 227.0
-offset_top = 193.0
-offset_right = 960.0
-offset_bottom = 505.0
+offset_left = 130.0
+offset_top = 320.0
+offset_right = 1002.0
+offset_bottom = 632.0
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_2xt78")
 text = "2D Assets sources: 
 Aliment package: https://kenney.nl/assets/food-kit
 
@@ -92,5 +105,6 @@ Music: walen folk danse by ???
 
 
 "
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]
