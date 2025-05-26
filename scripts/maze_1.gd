@@ -72,6 +72,11 @@ var grid = []
 var rooms = []
  
 func _ready():
+	if Global.music_on:
+		$MusicGame.play()
+	else:
+		$MusicGame.stop()
+		
 	randomize()
 	initialize_grid()
 	generate_dungeon()
