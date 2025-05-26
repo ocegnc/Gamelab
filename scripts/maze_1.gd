@@ -487,7 +487,6 @@ func draw_dungeon():
 		Vector2i(2,3), Vector2i(5,3),
 		Vector2i(3,4), Vector2i(5,4),
 		Vector2i(2,5),Vector2i(2,6),
-		Vector2i(5,6),
 	]
 			place_walls(wall_positions,room)
 			
@@ -534,7 +533,7 @@ func draw_dungeon():
 			place_walls(wall_positions,room)
 
 			#Knife
-			var knife_local_pos = Vector2i(5, 4)
+			var knife_local_pos = Vector2i(1, 0)
 			place_knife(knife_local_pos,room)
 
 			#Trou
@@ -555,7 +554,7 @@ func draw_dungeon():
 		if room.size.x == 8 and room.size.y == 8:
 			#Walls
 			var wall_positions = [
-		Vector2i(3,1), 
+		Vector2i(2,1), 
 		Vector2i(6,1), Vector2i(6,2),
 		Vector2i(3,3), Vector2i(4,3), Vector2i(5,3),
 		Vector2i(3,4), Vector2i(5,4),
@@ -570,7 +569,7 @@ func draw_dungeon():
 	Vector2i(7, 7), 
 ]
 			#Knife
-			var knife_local_pos = Vector2i(0, 7)
+			var knife_local_pos = Vector2i(2, 0)
 			place_knife(knife_local_pos,room)
 			
 
@@ -611,6 +610,6 @@ func place_knife(knife_local_pos,room):
 	var knife_global_pos = Vector2i(room.position) + knife_local_pos
 	var knife = knife_scene.instantiate()
 	add_child(knife)
-	knife.scale = Vector2(0.08, 0.08)  
+	knife.scale = Vector2(0.06, 0.06)  
 	knife.position = tile_map_layer.map_to_local(knife_global_pos)
 	

@@ -4,12 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://cis0rihg3va6p" path="res://assets/knife.png" id="2_5xdex"]
 [ext_resource type="Script" path="res://scripts/knifearea2D.gd" id="3_xu653"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvt7i"]
-size = Vector2(5594.1, 288.728)
-
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4b5i1"]
-a = Vector2(-251, -41)
-b = Vector2(44, 48)
+a = Vector2(-248, -39)
+b = Vector2(42, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8yc1"]
+size = Vector2(500, 35)
 
 [sub_resource type="Animation" id="Animation_fa5sa"]
 length = 0.001
@@ -53,11 +53,6 @@ _data = {
 position = Vector2(441, 320)
 script = ExtResource("1_ue3c7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(12, -119)
-scale = Vector2(0.110831, 0.110831)
-shape = SubResource("RectangleShape2D_uvt7i")
-
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture = ExtResource("2_5xdex")
 
@@ -69,10 +64,13 @@ script = ExtResource("3_xu653")
 position = Vector2(-46, -97)
 shape = SubResource("SegmentShape2D_4b5i1")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(73, -120.5)
+shape = SubResource("RectangleShape2D_s8yc1")
+
 [node name="knifemoove" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_f2qve")
 }
 
-[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]
