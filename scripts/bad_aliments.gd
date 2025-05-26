@@ -25,9 +25,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		print("BEURKKKK")
 		has_collided = true
-		$SoundEffect.play()
 		sprite.visible = false
-		await $SoundEffect.finished
+		if Global.soundeffects_on:
+			$SoundEffect.play()
+			await $SoundEffect.finished
 		queue_free()
 
 		
