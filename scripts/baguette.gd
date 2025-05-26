@@ -1,9 +1,11 @@
 extends CharacterBody2D
-
+@onready var GameState = preload("res://scripts/game_state.gd")
 # Variables de mouvement
 var current_speed = 50.0
 const BASE_SPEED = 50.0
-const BOOST_SPEED = 150.0
+const MAX_SPEED = 300.0
+const ACCELERATION = 200.0
+const DECELERATION = 400.0
 
 # Variables de contrôle
 var direction_x = 1  # 1 = droite, -1 = gauche
@@ -12,20 +14,11 @@ var origin_position: Vector2
 var is_knockback = false
 var knockback_velocity = Vector2.ZERO
 
-<<<<<<< HEAD
 # Système de victoire
 var aliments_ramasses = 0
 var total_aliments = 4
 
-# Références
-=======
-
-var origin_position: Vector2  # Position d'origine
-
-var score = 0
-
-
->>>>>>> 864c6d9c1027d815550a6a7690fca665ddecdd17
+@onready var score = $Score
 @onready var anim_player = $Run
 @onready var sprite = $Sprite2D
 
@@ -43,32 +36,56 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	
+	#score.text = "Score : " + str(Global.score)
+	#print(score)
+	
 	handle_movement_input()
+	update_speed(delta)
 	calculate_velocity()
-	apply_boost()
 	update_animation()
 	move_and_slide()
 
 func handle_movement_input():
-	if Input.is_action_just_pressed("ui_right"):
-		direction_x = 1
-	elif Input.is_action_just_pressed("ui_left"):
-		direction_x = -1
+	# On vérifie les directions pressées
+	var horizontal = 0
+	var vertical = 0
 	
-	if Input.is_action_just_pressed("ui_up"):
-		direction_y = -1
-	elif Input.is_action_just_pressed("ui_down"):
-		direction_y = 1
+	if Input.is_action_pressed("ui_right"):
+		horizontal = 1
+	elif Input.is_action_pressed("ui_left"):
+		horizontal = -1
+	
+	if Input.is_action_pressed("ui_up"):
+		vertical = -1
+	elif Input.is_action_pressed("ui_down"):
+		vertical = 1
+	
+	# Priorité : si horizontal est différent de zéro, on bouge horizontalement seulement
+	# Sinon on bouge verticalement
+	if horizontal != 0:
+		direction_x = horizontal
+		direction_y = 0
+	elif vertical != 0:
+		direction_y = vertical
+		direction_x = 0
+	# Si aucune touche, on garde la dernière direction (pas de remise à zéro)
+
+	
+	# Ne PAS remettre direction_x ou direction_y à zéro au relâchement de la touche
+	# Cela permet de garder la dernière direction même quand aucune touche n'est pressée
+
+func update_speed(delta: float) -> void:
+	var is_accelerating = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") \
+						or Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")
+	
+	if is_accelerating:
+		current_speed = min(current_speed + ACCELERATION * delta, MAX_SPEED)
+	else:
+		current_speed = BASE_SPEED
 
 func calculate_velocity():
 	velocity.x = direction_x * current_speed
 	velocity.y = direction_y * current_speed
-
-func apply_boost():
-	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"):
-		velocity.x = direction_x * BOOST_SPEED
-	if Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
-		velocity.y = direction_y * BOOST_SPEED
 
 func update_animation():
 	if velocity.x != 0 or velocity.y != 0:
@@ -99,11 +116,12 @@ func reset_after_knockback():
 	current_speed = BASE_SPEED
 	is_knockback = false
 	knockback_velocity = Vector2.ZERO
-
+																																																																																																		
 # Fonction à appeler quand la baguette ramasse un aliment
+
 func aliment_ramasse():
-	aliments_ramasses += 1
-	print(aliments_ramasses)
-	if aliments_ramasses == 6:
-		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
-		print("win")
+
+	aliments_ramasses += 1                          
+	GameState.instance.add_score(1)
+	#if aliments_ramasses == 6:
+		#get_tree().change_scene_to_file("res://scenes/win_screen.tscn")

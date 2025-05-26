@@ -542,6 +542,7 @@ shape = SubResource("CapsuleShape2D_xoi35")
 [node name="Right-arm" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(297, 322)
 rotation = -0.204398
+scale = Vector2(1, 1)
 texture = ExtResource("1_y3fp1")
 offset = Vector2(79, 42)
 
@@ -631,7 +632,7 @@ remote_path = NodePath("../../../../../Body/Right-arm")
 
 [node name="RightLeg" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Trunk"]
 position = Vector2(27.6832, 271.679)
-rotation = -0.0923846
+rotation = -0.0923841
 scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.995734, -0.0922527, 0.0922527, 0.995734, 27.6832, 271.679)
 metadata/_local_pose_override_enabled_ = true
@@ -678,4 +679,11 @@ libraries = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(209, 103)
-zoom = Vector2(6, 6)
+scale = Vector2(0.07, 0.07)
+
+[node name="Score" type="Label" parent="Camera2D"]
+offset_left = 6343.0
+offset_top = -3571.0
+offset_right = 7469.0
+offset_bottom = -3171.0
+text = "Score: 0"

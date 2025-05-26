@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcb7b6xe4esy0"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_rek6o"]
+[ext_resource type="PackedScene" path="res://scenes/Stopwatch.tscn" id="2_bbvl5"]
+
+[sub_resource type="FontFile" id="FontFile_jfebu"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_64uvt"]
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("stopwatch")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rek6o")
+stopwatch = NodePath("Stopwatch")
+
+[node name="Stopwatchlabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_right = 195.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_jfebu")
+theme_override_font_sizes/font_size = 0
+text = "00:00:000"
+label_settings = SubResource("LabelSettings_64uvt")
+vertical_alignment = 1
+
+[node name="Stopwatch" parent="." instance=ExtResource("2_bbvl5")]

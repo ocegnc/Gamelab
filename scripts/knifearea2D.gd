@@ -17,3 +17,6 @@ func _on_body_entered(body: Node2D) -> void:
 		print("Touched")
 		var knockback_dir = (body.global_position - global_position).normalized()
 		body.apply_knockback(knockback_dir, knockback_force, knockback_duration)
+	else : 
+		if owner.has_method("change_direction"):
+			owner.change_direction()

@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://dnj1l0h81drai"]
+
+[ext_resource type="Script" path="res://scripts/options.gd" id="1_0o6v7"]
+[ext_resource type="Texture2D" uid="uid://d0n1k6ywbcbd7" path="res://assets/Background Menu.png" id="2_1fpql"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gib3i"]
+texture = ExtResource("2_1fpql")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kici5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ssc5j"]
+bg_color = Color(0.290512, 0.505981, 0.314636, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8eux6"]
+bg_color = Color(0.19175, 0.35026, 0.209794, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fycf"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2xt78"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0o6v7")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1112.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gib3i")
+
+[node name="Button2" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -493.0
+offset_top = -251.0
+offset_right = -387.0
+offset_bottom = -171.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_color = Color(0.628592, 0.420328, 0.151188, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kici5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ssc5j")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8eux6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8fycf")
+text = "🏠"
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 320.0
+offset_right = 1002.0
+offset_bottom = 632.0
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_2xt78")
+text = "2D Assets sources: 
+Aliment package: https://kenney.nl/assets/food-kit
+
+Sound Sources: 
+Music: walen folk danse by ???
+
+
+"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]
