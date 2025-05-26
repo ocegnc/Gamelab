@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://d3uxw8sf6s8eg"]
+[gd_scene load_steps=26 format=3 uid="uid://d3uxw8sf6s8eg"]
 
 [ext_resource type="Script" path="res://scripts/aliments.gd" id="1_slfee"]
 [ext_resource type="Texture2D" uid="uid://rat2snchrj3d" path="res://assets/Aliment.png" id="2_jait0"]
+[ext_resource type="AudioStream" uid="uid://v4dn17mosu6t" path="res://assets/Sound/SoundEffect-Miam.mp3" id="3_khov4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nryxe"]
 atlas = ExtResource("2_jait0")
@@ -165,5 +166,9 @@ sprite_frames = SubResource("SpriteFrames_tg4ix")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_0udnx")
+
+[node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_khov4")
+volume_db = 5.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

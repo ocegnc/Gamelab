@@ -13,12 +13,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func _on_body_entered(body: Node2D,) -> void:
+var has_collided := false
+
+func _on_body_entered(body: Node2D) -> void:
+	if has_collided:
+		return
+
 	if body is CharacterBody2D:
-		sprite.visible = false  # Cache le sprite
-		queue_free()  # Supprime complètement le node
-	if (body.name == "Baguette"):
-		#body.score+=1
-		print("score:",body.score)
-		body.aliment_ramasse()
-		
+		has_collided = true
+		$SoundEffect.play()
+		sprite.visible = false
+		await $SoundEffect.finished
+		queue_free()
