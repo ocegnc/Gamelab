@@ -17,9 +17,16 @@ func _on_button_2_pressed() -> void:
 func _on_music_toggle_pressed() -> void:
 	if Global.music_on:
 		print("Music stopped")
-		#music_toggle_button.text = "🔇"
+		$Panel/MusicToggle.text = "   Music: 🔇"
 	else:
-		pass
-		#music_toggle_button.text = "🎵"
-
+		$Panel/MusicToggle.text = "   Music: 🎵"
 	Global.music_on = !Global.music_on
+
+
+func _on_sound_effects_toggle_pressed() -> void:
+	if Global.soundeffects_on:
+		print("Effects stopped")
+		$Panel/SoundEffectsToggle.text = "   Sound effects: 🔇"
+	else:
+		$Panel/SoundEffectsToggle.text = "   Sound effects: 🎵"
+	Global.soundeffects_on = !Global.soundeffects_on
