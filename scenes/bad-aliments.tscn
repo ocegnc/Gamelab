@@ -174,4 +174,4 @@ shape = SubResource("RectangleShape2D_w81vc")
 
 [node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qgnfs")
-volume_db = 10.0
+volume_db = 22.0
