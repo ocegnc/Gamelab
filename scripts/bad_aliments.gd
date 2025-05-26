@@ -16,11 +16,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+var has_collided := false
+
 func _on_body_entered(body: Node2D) -> void:
+	if has_collided:
+		return
+
 	if body is CharacterBody2D:
-		print("BEURKKKKK")
+		print("BEURKKKK")
+		has_collided = true
+		$SoundEffect.play()
 		sprite.visible = false
-		#maze.make_loose_time()
+		await $SoundEffect.finished
 		queue_free()
 
 		

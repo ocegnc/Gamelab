@@ -107,4 +107,15 @@ Music: walen folk danse by ???
 "
 horizontal_alignment = 1
 
+[node name="MusicToggle" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 880.0
+offset_top = 53.0
+offset_right = 955.0
+offset_bottom = 119.0
+theme_override_font_sizes/font_size = 50
+text = "🔇"
+
 [connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Panel/MusicToggle" to="." method="_on_music_toggle_pressed"]
+[connection signal="toggled" from="Panel/MusicToggle" to="." method="_on_music_toggle_toggled"]
