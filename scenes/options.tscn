@@ -46,9 +46,17 @@ shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0iiu"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4bshs"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_usmjo"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
@@ -59,9 +67,17 @@ shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0bnj"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijqj3"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bv53g"]
 bg_color = Color(0.364706, 0.615686, 0.392157, 1)
@@ -137,7 +153,10 @@ offset_left = 758.0
 offset_top = 62.0
 offset_right = 1096.0
 offset_bottom = 131.0
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 34
 theme_override_styles/hover = SubResource("StyleBoxFlat_j0iiu")
@@ -152,7 +171,10 @@ offset_left = 758.0
 offset_top = 129.0
 offset_right = 1096.0
 offset_bottom = 201.0
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/icon_normal_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 34

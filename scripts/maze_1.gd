@@ -34,6 +34,8 @@ var wall_corner_left3 := Vector2i(11, 2)
 var wall_angle_right := Vector2i(10, 4)
 var wall_angle_left := Vector2i(11, 4)
 
+var aliments_a_recuperer = []
+
 
  # Constants defining the grid size, cell size, and room parameters
 const WIDTH = 80  # Augmenté pour accommoder 9 salles
@@ -72,11 +74,7 @@ var grid = []
 var rooms = []
  
 func _ready():
-	if Global.music_on:
-		$MusicGame.play()
-	else:
-		$MusicGame.stop()
-		
+	music_toggle()
 	randomize()
 	initialize_grid()
 	generate_dungeon()
@@ -131,7 +129,7 @@ func _process(delta):
 	var sec = fmod(time, 60)
 	var min = fmod(time, 3600) / 60
 	label.text = "%02d:%02d:%02d" % [min, sec, msec]
-	if label.text=="00:00:00":
+	if time <= 0:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 func make_loose_time():
@@ -144,20 +142,20 @@ func initialize_grid():
 		for y in range(HEIGHT):
 			grid[x].append(1)
 
-
-
 func _on_score_updated(new_score):
 	if scorelabel:
 		scorelabel.text = "Score: %d" % new_score
 		print("Score mis à jour: ", new_score) 
 
-
-
-
 func update_score(value: int):
 	if scorelabel:
 		scorelabel.text = "Score: %d" % value
 
+func music_toggle():
+	if Global.music_on:
+		$MusicGame.play()
+	else:
+		$MusicGame.stop()
 
 
 func generate_dungeon():
@@ -447,8 +445,9 @@ func draw_dungeon():
 		tile_map_layer.set_cell(bottom_left_side, 0, wall_tile_left_side)
 		tile_map_layer.set_cell(bottom_right_side, 0, wall_tile_right_side)
 
-	
+#### NEW ROOM ###
 		if room.size.x == 11 and room.size.y == 11:
+			#Walls
 			var wall_positions = [
 			Vector2i(4,1), Vector2i(4,2), Vector2i(4,3),
 			Vector2i(3,3), Vector2i(2,3), Vector2i(2,4),
@@ -459,63 +458,30 @@ func draw_dungeon():
 			Vector2i(2,8), Vector2i(5,8), Vector2i(8,8),
 			Vector2i(3,9), Vector2i(4,9), Vector2i(5,9), Vector2i(8,9), Vector2i(10,9)
 			]
-	
-	# Place all walls
-			for pos in wall_positions:
-		# Convert to global coordinates and place wall
-				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
-				tile_map_layer.set_cell(global_pos, 0, wall_tile)
+			place_walls(wall_positions,room)
+			
+			#Trou
 			var trou_local_pos = Vector2i(0, 8)
 			var trou_global_pos = Vector2i(room.position) + trou_local_pos
-	
-	# Placement précis (en pixels)
 			var trou = trou_scene.instantiate()
-			
 			trou.position = tile_map_layer.map_to_local(trou_global_pos) + Vector2(10, 0)
 			add_child(trou)
 			
+			#Aliments
 			var aliment_positions = [
-	Vector2i(2, 5),  # Position 1
-	Vector2i(2, 1),  # Position 2
-	Vector2i(9, 1)   # Position 3
-]
-
-			for pos in aliment_positions:
-	# Conversion en coordonnées globales
-				var global_pos = Vector2i(room.position) + pos
-	
-	# Création et placement de l'aliment
-				var aliment = aliment_scene.instantiate()
-				aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
-				aliment.position = tile_map_layer.map_to_local(global_pos)
-	
-	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
-	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
-	
-				add_child(aliment)
- 		
-		#IDEM pour les maubais aliments
+	Vector2i(2, 5), 
+	Vector2i(2, 1),  
+	Vector2i(9, 1)]
 			var bad_aliment_positions = [
-	Vector2i(7, 4),
-]
-			for pos in bad_aliment_positions:
-	# Conversion en coordonnées globales
-				var global_pos = Vector2i(room.position) + pos
+	Vector2i(7, 4)]
 	
-	# Création et placement de l'aliment
-				var bad_aliment = bad_aliment_scene.instantiate()
-				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
-				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
-	
-	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
-	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
-	
-				add_child(bad_aliment)
+			put_good_aliment(aliment_positions,room)
+			put_bad_aliment(bad_aliment_positions,room)
 		
 		
-		# Pièges dans les salles moyennes (7x7)
+		#### NEW ROOM ###
 		if room.size.x == 7 and room.size.y == 7:
- 	# Position au centre de la salle en coordonnées grille
+ 			#Walls
 			var wall_positions = [
 		Vector2i(1,1), Vector2i(2,1),Vector2i(3,1), Vector2i(3,2),
 		Vector2i(5,2), Vector2i(6,2),  # Note: (8,1) is outside 7x7
@@ -524,38 +490,18 @@ func draw_dungeon():
 		Vector2i(2,5),Vector2i(2,6),
 		Vector2i(5,6),
 	]
-	
-	# Place all walls
-			for pos in wall_positions:
-		# Convert to global coordinates and place wall
-				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
-				tile_map_layer.set_cell(global_pos, 0, wall_tile)
-			var aliment_pos = Vector2i(4, 3)  # Position centrale stratégique
+			place_walls(wall_positions,room)
+			
+			#Aliments
+			var aliment_pos = Vector2i(4, 3)  
 			var aliment_global_pos = Vector2i(room.position.x + aliment_pos.x, room.position.y + aliment_pos.y)
-			var aliment = aliment_scene.instantiate()
-			aliment.scale = Vector2(0.1, 0.1)
-			aliment.position = tile_map_layer.map_to_local(aliment_global_pos)
-			add_child(aliment)
+
+			var bad_aliment_positions = [Vector2i(2, 4),]
+			put_bad_aliment(bad_aliment_positions,room)
 			
-			
-				#IDEM pour les maubais aliments
-			var bad_aliment_positions = [
-	Vector2i(2, 4),
-]
-			for pos in bad_aliment_positions:
-	# Conversion en coordonnées globales
-				var global_pos = Vector2i(room.position) + pos
-	
-	# Création et placement de l'aliment
-				var bad_aliment = bad_aliment_scene.instantiate()
-				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
-				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
-	
-				add_child(bad_aliment)
-				
-			
-			
+		#### NEW ROOM ###
 		if room.size.x == 9 and room.size.y == 9:
+			#Walls
 			var wall_positions = [
  			Vector2i(2, 2), Vector2i(2, 3), Vector2i(3, 4),
  			Vector2i(2, 5), Vector2i(3, 6), Vector2i(5, 6),
@@ -563,29 +509,15 @@ func draw_dungeon():
  			Vector2i(5, 2), Vector2i(5, 3), Vector2i(4, 3),
  			Vector2i(6, 6), Vector2i(4, 6)
 			]
+			place_walls(wall_positions,room)
 			
-					#IDEM pour les maubais aliments
+			#Aliments
 			var bad_aliment_positions = [
 	Vector2i(4, 2),
-	Vector2i(5, 7),
-]
-			for pos in bad_aliment_positions:
-	# Conversion en coordonnées globales
-				var global_pos = Vector2i(room.position) + pos
-	
-	# Création et placement de l'aliment
-				var bad_aliment = bad_aliment_scene.instantiate()
-				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
-				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
-	
-				add_child(bad_aliment)
+	Vector2i(5, 7),]
+			put_bad_aliment(bad_aliment_positions,room)
  	
- 	# Placement des murs
-			for pos in wall_positions:
-				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
-				tile_map_layer.set_cell(global_pos, 0, wall_tile)
-
- 		
+		### NEW ROOM ###
 		if room.size.x == 14 and room.size.y == 14:
 			var wall_positions = [
 			Vector2i(4,1), Vector2i(7,1), 
@@ -600,44 +532,29 @@ func draw_dungeon():
 			Vector2i(5,10), Vector2i(9,10),
 			Vector2i(3,11), Vector2i(6,11), Vector2i(7,11), Vector2i(8,11), Vector2i(9,11), Vector2i(10,11)]
 			
- 	# Place all walls
-			for pos in wall_positions:
- 		# Convert to global coordinates and place wall
-				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
-				tile_map_layer.set_cell(global_pos, 0, wall_tile)
+			place_walls(wall_positions,room)
 
+			#Knife
 			var knife_local_pos = Vector2i(5, 4)
-			var knife_global_pos = Vector2i(room.position) + knife_local_pos
+			place_knife(knife_local_pos,room)
 
-			var knife = knife_scene.instantiate()
-			add_child(knife)  # Ajout d'abord !
-			knife.scale = Vector2(0.08, 0.08)  # Échelle plus raisonnable
-			knife.position = tile_map_layer.map_to_local(knife_global_pos)
-
-# Debug
-			print("Knife placé à : ", knife.position)
+			#Trou
 			var trou_pos = Vector2i(room.position.x + 12, room.position.y + 12)
 			var trou = trou_scene.instantiate()
 			trou.position = tile_map_layer.map_to_local(trou_pos)
 			add_child(trou)
 
-	# 2. Aliments aux positions stratégiques
+			# Aliments
 			var aliment_positions = [
 		Vector2i(2,2),  # Haut-gauche
 		Vector2i(12,3), # Haut-droite
 		Vector2i(6,8),  # Centre
 		Vector2i(3,12)]
-	
-			for pos in aliment_positions:
-				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
-				var aliment = aliment_scene.instantiate()
-				aliment.scale = Vector2(0.1, 0.1)
-				aliment.position = tile_map_layer.map_to_local(global_pos)
-				add_child(aliment)
+			put_good_aliment(aliment_positions,room)
 
-
-
+		### NEW ROOM ###
 		if room.size.x == 8 and room.size.y == 8:
+			#Walls
 			var wall_positions = [
 		Vector2i(3,1), 
 		Vector2i(6,1), Vector2i(6,2),
@@ -647,26 +564,54 @@ func draw_dungeon():
 		Vector2i(2,6), Vector2i(3,6), Vector2i(6,6),
 		Vector2i(2,7)]
 	
-	# Placement direct comme avant
-			for pos in wall_positions:
+			place_walls(wall_positions,room)
+				
+			#Aliments
+			var aliment_positions = [
+	Vector2i(7, 7), 
+]
+			#Knife
+			var knife_local_pos = Vector2i(0, 7)
+			place_knife(knife_local_pos,room)
+			
+
+func place_walls(wall_positions,room):
+	for pos in wall_positions:
+ 		# Convert to global coordinates and place wall
 				var global_pos = Vector2i(room.position.x + pos.x, room.position.y + pos.y)
 				tile_map_layer.set_cell(global_pos, 0, wall_tile)
-			var aliment_positions = [
-	Vector2i(7, 7),  # Position 1
-]
-			var knife_local_pos = Vector2i(0, 7)
-			var knife_global_pos = Vector2i(room.position) + knife_local_pos
 
-			var knife = knife_scene.instantiate()
-			add_child(knife)  # Ajout d'abord !
-			knife.scale = Vector2(0.08, 0.08)  # Échelle plus raisonnable
-			knife.position = tile_map_layer.map_to_local(knife_global_pos)
-			for pos in aliment_positions:
+func put_good_aliment(aliment_positions,room):
+	for pos in aliment_positions:
 	# Conversion en coordonnées globales
 				var global_pos = Vector2i(room.position) + pos
 	
 	# Création et placement de l'aliment
 				var aliment = aliment_scene.instantiate()
+				aliments_a_recuperer.append(aliment)
 				aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
 				aliment.position = tile_map_layer.map_to_local(global_pos)
 				add_child(aliment)
+
+func put_bad_aliment(bad_aliment_positions,room):
+	for pos in bad_aliment_positions:
+	# Conversion en coordonnées globales
+				var global_pos = Vector2i(room.position) + pos
+	
+	# Création et placement de l'aliment
+				var bad_aliment = bad_aliment_scene.instantiate()
+				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
+	
+	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
+	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
+	
+				add_child(bad_aliment)
+
+func place_knife(knife_local_pos,room):
+	var knife_global_pos = Vector2i(room.position) + knife_local_pos
+	var knife = knife_scene.instantiate()
+	add_child(knife)
+	knife.scale = Vector2(0.08, 0.08)  
+	knife.position = tile_map_layer.map_to_local(knife_global_pos)
+	
