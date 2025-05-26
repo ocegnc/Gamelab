@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh756vbdutr6c"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_rek6o"]
-[ext_resource type="PackedScene" uid="uid://teqlyqxjb8s2" path="res://scenes/Stopwatch.tscn" id="2_bbvl5"]
+[ext_resource type="PackedScene" path="res://scenes/Stopwatch.tscn" id="2_bbvl5"]
 
 [sub_resource type="FontFile" id="FontFile_jfebu"]
 cache/0/16/0/ascent = 0.0
