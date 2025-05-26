@@ -15,4 +15,5 @@ func _process(delta: float) -> void:
 func _on_body_entered(body) -> void:
 	if body is CharacterBody2D:
 		print("Touched")
+		GameState.instance.score = 0
 		get_tree().reload_current_scene()
