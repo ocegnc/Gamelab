@@ -72,14 +72,22 @@ const ROOM_TEMPLATES = [
  # Arrays to hold the grid data and the list of rooms
 var grid = []
 var rooms = []
- 
+
+var canvas_layer = CanvasLayer.new()
+var time = 90.0
+
 func _ready():
 	music_toggle()
 	randomize()
 	initialize_grid()
 	generate_dungeon()
 	draw_dungeon()
-	var canvas_layer = CanvasLayer.new()
+	install_score()
+	install_timer()
+	install_pausebutton()
+	install_pausemenu()
+
+func install_score():
 	canvas_layer.layer = 1
 	scorelabel=Label.new()
 	scorelabel.name="ScoreLabel"
@@ -87,10 +95,10 @@ func _ready():
 	scorelabel.position = Vector2(20, 20)  # Position différente du timer
 	scorelabel.add_theme_font_size_override("font_size", 30)
 	scorelabel.add_theme_color_override("font_color", Color.BLACK)
-	GameState.instance.score_updated.connect(_on_score_updated)
-	scorelabel.text = "Score: 0"
-	
-	
+	print("GameState.instance =", GameState.instance)
+	GameState.instance.score_updated.connect(_on_score_updated)	
+
+func install_timer():
 	label = Label.new()
 	label.name = "TimerLabel"
 	label.text = "01:30:00"
@@ -102,22 +110,21 @@ func _ready():
 	canvas_layer.add_child(scorelabel)
 	canvas_layer.add_child(label)
 	add_child(canvas_layer)
-	
+
+func install_pausebutton():
 	var pause_button = Button.new()
 	pause_button.text = "⏸"
 	pause_button.position = Vector2(get_viewport().size.x - 120, 20)
 	pause_button.add_theme_font_size_override("font_size", 24)
 	pause_button.pressed.connect(_on_pause_pressed)
 	canvas_layer.add_child(pause_button)
-	
+
+func install_pausemenu():
 	var pause_menu_scene = preload("res://scenes/Pause.tscn")
 	var pause_menu = pause_menu_scene.instantiate()
 	pause_menu.visible = false
 	pause_menu.name = "PauseMenu"
 	add_child(pause_menu)
-	
-	# Mettez à jour dans _process
-var time = 90.0
 
 func _on_pause_pressed():
 	get_tree().paused = true
@@ -134,7 +141,6 @@ func _process(delta):
 
 func make_loose_time():
 	time -= 5   
-
 	
 func initialize_grid():
 	for x in range(WIDTH):
@@ -146,10 +152,6 @@ func _on_score_updated(new_score):
 	if scorelabel:
 		scorelabel.text = "Score: %d" % new_score
 		print("Score mis à jour: ", new_score) 
-
-func update_score(value: int):
-	if scorelabel:
-		scorelabel.text = "Score: %d" % value
 
 func music_toggle():
 	if Global.music_on:
@@ -177,19 +179,16 @@ func generate_dungeon():
  		# Ligne du haut
 		connect_rooms(rooms[0], rooms[1])
 		connect_rooms(rooms[1], rooms[2])
- 
  		# Ligne du milieu
 		connect_rooms(rooms[3], rooms[4])
 		connect_rooms(rooms[4], rooms[5])
- 
  		# Ligne du bas
 		connect_rooms(rooms[6], rooms[7])
 		connect_rooms(rooms[7], rooms[8])
- 
 		# Colonnes verticales
 		connect_rooms(rooms[0], rooms[3])
 		connect_rooms(rooms[3], rooms[6])
- 
+		
 		connect_rooms(rooms[1], rooms[4])
 		connect_rooms(rooms[4], rooms[7])
  

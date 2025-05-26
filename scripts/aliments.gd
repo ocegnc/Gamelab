@@ -20,6 +20,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	if body is CharacterBody2D:
+		print(GameState.score)
+		GameState.instance.score += 1
 		has_collided = true
 		sprite.visible = false
 		if Global.soundeffects_on:

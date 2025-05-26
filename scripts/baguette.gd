@@ -15,7 +15,6 @@ var is_knockback = false
 var knockback_velocity = Vector2.ZERO
 
 # Système de victoire
-var aliments_ramasses = 0
 var total_aliments = 4
 
 @onready var score = $Score
@@ -118,10 +117,3 @@ func reset_after_knockback():
 	knockback_velocity = Vector2.ZERO
 																																																																																																		
 # Fonction à appeler quand la baguette ramasse un aliment
-
-func aliment_ramasse():
-
-	aliments_ramasses += 1                          
-	GameState.instance.add_score(1)
-	#if aliments_ramasses == 6:
-		#get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
