@@ -105,8 +105,26 @@ func _ready():
 	canvas_layer.add_child(label)
 	add_child(canvas_layer)
 	
+	var pause_button = Button.new()
+	pause_button.text = "⏸"
+	pause_button.position = Vector2(get_viewport().size.x - 120, 20)
+	pause_button.add_theme_font_size_override("font_size", 24)
+	pause_button.pressed.connect(_on_pause_pressed)
+	canvas_layer.add_child(pause_button)
+	
+	var pause_menu_scene = preload("res://scenes/Pause.tscn")
+	var pause_menu = pause_menu_scene.instantiate()
+	pause_menu.visible = false
+	pause_menu.name = "PauseMenu"
+	add_child(pause_menu)
+	
 	# Mettez à jour dans _process
 var time = 90.0
+
+func _on_pause_pressed():
+	get_tree().paused = true
+	$PauseMenu.visible = true
+
 func _process(delta):
 	time -= delta
 	var msec = fmod(time, 1) * 100
