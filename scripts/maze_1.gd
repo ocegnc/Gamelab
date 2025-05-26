@@ -117,6 +117,11 @@ func install_pausebutton():
 	pause_button.position = Vector2(get_viewport().size.x - 120, 20)
 	pause_button.add_theme_font_size_override("font_size", 24)
 	pause_button.pressed.connect(_on_pause_pressed)
+	var stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Color(0, 0, 0, 0)
+	pause_button.add_theme_stylebox_override("normal", stylebox)
+	pause_button.add_theme_stylebox_override("hover", stylebox)
+	pause_button.add_theme_stylebox_override("pressed", stylebox)
 	canvas_layer.add_child(pause_button)
 
 func install_pausemenu():
