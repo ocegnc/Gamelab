@@ -11,6 +11,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_started_pressed() -> void:
+	var player_name_input = $VBoxContainer/player_name_input
 	var player_name = player_name_input.text.strip_edges()
 	if player_name == "":
 		player_name = "Player"  # valeur par défaut si vide

@@ -55,17 +55,13 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_pfrfl")
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -104.0
-offset_top = -37.0
-offset_right = 108.0
-offset_bottom = 33.0
+offset_left = -106.0
+offset_right = 106.0
+offset_bottom = 70.0
 grow_horizontal = 2
-grow_vertical = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
@@ -79,14 +75,46 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_m0phg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_d7a11")
 text = "Main Menu"
 
-[node name="ScoreLabel" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.364706, 0.615686, 0.392157, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ScoreList" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 9
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
 
 [connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]

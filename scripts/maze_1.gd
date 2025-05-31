@@ -74,7 +74,7 @@ var grid = []
 var rooms = []
 
 var canvas_layer = CanvasLayer.new()
-var time = 90.0
+var time = 10.0
 
 func _ready():
 	music_toggle()
@@ -86,6 +86,7 @@ func _ready():
 	install_timer()
 	install_pausebutton()
 	install_pausemenu()
+	Global.player_score = 0
 
 func install_score():
 	canvas_layer.layer = 1
@@ -135,17 +136,22 @@ func _on_pause_pressed():
 	get_tree().paused = true
 	$PauseMenu.visible = true
 
+func format_time(time_seconds: float) -> String:
+	var minutes = int(time_seconds) / 60
+	var seconds = int(time_seconds) % 60
+	var centi = int((time_seconds - int(time_seconds)) * 100)
+	return "%02d:%02d:%02d" % [minutes, seconds, centi]
+	
 func _process(delta):
 	time -= delta
-	var msec = fmod(time, 1) * 100
-	var sec = fmod(time, 60)
-	var min = fmod(time, 3600) / 60
-	label.text = "%02d:%02d:%02d" % [min, sec, msec]
+	time = max(time, 0)
+	label.text = format_time(time)
 	if time <= 0:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 func make_loose_time():
-	time -= 5   
+	print("Le joueur a ramassé un mauvais aliment, tu perds du temps !")
+	time = max(0, time - 5)  
 	
 func initialize_grid():
 	for x in range(WIDTH):
@@ -274,6 +280,8 @@ func is_wall_decor_tile(tile: Vector2i) -> bool:
 func is_valid_tile(tile: Vector2i) -> bool:
 	return tile != Vector2i(-1, -1)
 
+var bad_aliments = []
+
 func draw_dungeon():
 	
 	var fixed_room = FIXED_ROOMS[0]  # [x, y, width, height]
@@ -292,6 +300,9 @@ func draw_dungeon():
 	baguette.scale = Vector2(0.02, 0.02)
 	baguette.position = baguette_pos
 	add_child(baguette)
+
+	for bad_aliment in bad_aliments:
+		bad_aliment.bad_aliment_collected.connect(self.make_loose_time)
 			
 	for x in range(WIDTH):
 		var y = 0
@@ -611,6 +622,8 @@ func put_bad_aliment(bad_aliment_positions,room):
 	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
 	
 				add_child(bad_aliment)
+				bad_aliments.append(bad_aliment)
+				
 
 func place_knife(knife_local_pos,room):
 	var knife_global_pos = Vector2i(room.position) + knife_local_pos
