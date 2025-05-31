@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://tkg17k5p8r1u"]
 
-[ext_resource type="Script" path="res://scripts/maze_1.gd" id="1_vv1ol"]
+[ext_resource type="Script" uid="uid://xij4fcs3wu2c" path="res://scripts/maze_1.gd" id="1_vv1ol"]
 [ext_resource type="Texture2D" uid="uid://6wyif868rvkb" path="res://assets/Maze_16x16-Recovered-Recovered-sheet.png" id="2_1m6tt"]
 [ext_resource type="AudioStream" uid="uid://ddxjnptrcwdfu" path="res://assets/Sound/walen-folk-dance.mp3" id="3_gnhwj"]
 

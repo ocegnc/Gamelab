@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfts2gx72hn72"]
 
-[ext_resource type="Script" path="res://scripts/trou.gd" id="1_bosnp"]
+[ext_resource type="Script" uid="uid://blhiieq6c1vns" path="res://scripts/trou.gd" id="1_bosnp"]
 [ext_resource type="Texture2D" uid="uid://bjq7rswmvpq2j" path="res://assets/Trou.png" id="2_y5fmq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ywnrt"]

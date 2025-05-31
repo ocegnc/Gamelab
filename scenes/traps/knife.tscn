@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://beymxkwmr68ex"]
 
-[ext_resource type="Script" path="res://scripts/knife.gd" id="1_ue3c7"]
+[ext_resource type="Script" uid="uid://d1bxjoplrw6n4" path="res://scripts/knife.gd" id="1_ue3c7"]
 [ext_resource type="Texture2D" uid="uid://cis0rihg3va6p" path="res://assets/knife.png" id="2_5xdex"]
-[ext_resource type="Script" path="res://scripts/knifearea2D.gd" id="3_xu653"]
+[ext_resource type="Script" uid="uid://c1j41gswgdhx0" path="res://scripts/knifearea2D.gd" id="3_xu653"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4b5i1"]
 a = Vector2(-248, -39)
@@ -45,8 +45,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f2qve"]
 _data = {
-"RESET": SubResource("Animation_fa5sa"),
-"knifemoove": SubResource("Animation_sifje")
+&"RESET": SubResource("Animation_fa5sa"),
+&"knifemoove": SubResource("Animation_sifje")
 }
 
 [node name="knife" type="CharacterBody2D"]
@@ -70,7 +70,7 @@ shape = SubResource("RectangleShape2D_s8yc1")
 
 [node name="knifemoove" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_f2qve")
+&"": SubResource("AnimationLibrary_f2qve")
 }
 
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3ue3jw631jdi"]
 
-[ext_resource type="PackedScene" uid="uid://bcb7b6xe4esy0" path="res://scenes/hud.tscn" id="1_a11l3"]
+[ext_resource type="PackedScene" uid="uid://dh756vbdutr6c" path="res://scenes/hud.tscn" id="1_a11l3"]
 [ext_resource type="PackedScene" uid="uid://teqlyqxjb8s2" path="res://scenes/Stopwatch.tscn" id="2_u5m5t"]
 
 [sub_resource type="FontFile" id="FontFile_bgluj"]
