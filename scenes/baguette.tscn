@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://bhg5cxhvy7yp0"]
 
-[ext_resource type="Script" path="res://scripts/baguette.gd" id="1_t35pd"]
+[ext_resource type="Script" uid="uid://dwbbya3ofpvn0" path="res://scripts/baguette.gd" id="1_t35pd"]
 [ext_resource type="Texture2D" uid="uid://dlkfesdycjwi6" path="res://assets/Baguette/right-arm.png" id="1_y3fp1"]
 [ext_resource type="Texture2D" uid="uid://dnutgmelb8eau" path="res://assets/Baguette/body.png" id="2_qfbf4"]
 [ext_resource type="Texture2D" uid="uid://uqbwqv00u8py" path="res://assets/Baguette/drop.png" id="3_463ld"]
@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://d3a5h1vdee3db" path="res://assets/Baguette/speed.png" id="10_bjems"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xoi35"]
-radius = 134.0
-height = 760.0
+radius = 116.0
+height = 476.0
 
 [sub_resource type="SkeletonModification2DCCDIK" id="SkeletonModification2DCCDIK_valjg"]
 target_nodepath = NodePath("../../../IK Targets/FootR Target")
@@ -524,15 +524,15 @@ tracks/13/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ffrrq"]
 _data = {
-"RESET": SubResource("Animation_7al6o"),
-"run": SubResource("Animation_r2g7q")
+&"RESET": SubResource("Animation_7al6o"),
+&"run": SubResource("Animation_r2g7q")
 }
 
 [node name="Baguette" type="CharacterBody2D"]
 script = ExtResource("1_t35pd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(152, 210)
+position = Vector2(169, 313)
 shape = SubResource("CapsuleShape2D_xoi35")
 
 [node name="CharacterContainer" type="Node2D" parent="."]
@@ -542,6 +542,7 @@ shape = SubResource("CapsuleShape2D_xoi35")
 [node name="Right-arm" type="Sprite2D" parent="CharacterContainer/Body"]
 position = Vector2(297, 322)
 rotation = -0.204398
+scale = Vector2(1, 1)
 texture = ExtResource("1_y3fp1")
 offset = Vector2(79, 42)
 
@@ -673,7 +674,7 @@ position = Vector2(212, 379)
 
 [node name="Run" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ffrrq")
+&"": SubResource("AnimationLibrary_ffrrq")
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]

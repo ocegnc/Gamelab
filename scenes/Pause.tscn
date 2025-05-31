@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dh5vo0dosesfe"]
 
-[ext_resource type="Script" path="res://scripts/pause.gd" id="1_7q3j4"]
+[ext_resource type="Script" uid="uid://c1re7oifoco3b" path="res://scripts/pause.gd" id="1_7q3j4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hldc5"]
 

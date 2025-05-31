@@ -156,6 +156,7 @@ func initialize_grid():
 func _on_score_updated(new_score):
 	if scorelabel:
 		scorelabel.text = "Score: %d" % new_score
+		Global.player_score = new_score
 		print("Score mis à jour: ", new_score) 
 
 func music_toggle():

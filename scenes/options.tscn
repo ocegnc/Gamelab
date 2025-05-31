@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://c7voy2yyb7mth"]
 
-[ext_resource type="Script" path="res://scripts/options.gd" id="1_0o6v7"]
+[ext_resource type="Script" uid="uid://dg7od7whnmhsk" path="res://scripts/options.gd" id="1_0o6v7"]
 [ext_resource type="Texture2D" uid="uid://d0n1k6ywbcbd7" path="res://assets/Background Menu.png" id="2_1fpql"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gib3i"]
@@ -118,9 +118,9 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_color = Color(0.628592, 0.420328, 0.151188, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 30
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kici5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ssc5j")
@@ -155,9 +155,9 @@ offset_right = 1096.0
 offset_bottom = 131.0
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 34
 theme_override_styles/hover = SubResource("StyleBoxFlat_j0iiu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4bshs")
@@ -173,10 +173,10 @@ offset_right = 1096.0
 offset_bottom = 201.0
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/icon_normal_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 34
 theme_override_styles/hover = SubResource("StyleBoxFlat_y0bnj")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ijqj3")
