@@ -73,7 +73,7 @@ offset_right = 54.0
 offset_bottom = 188.0
 grow_horizontal = 2
 
-[node name="Button" type="Button" parent="Panel/VBoxContainer"]
+[node name="home_button" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
@@ -88,7 +88,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_m0phg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_d7a11")
 text = "HOME"
 
-[node name="Button2" type="Button" parent="Panel/VBoxContainer"]
+[node name="Replay_button" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
@@ -141,5 +141,5 @@ offset_bottom = 63.0
 grow_horizontal = 2
 theme_override_constants/separation = 9
 
-[connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_home_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Button2" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/home_button" to="." method="_on_home_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Replay_button" to="." method="_on_replay_pressed"]

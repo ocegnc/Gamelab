@@ -26,10 +26,12 @@ func _on_body_entered(body: Node2D) -> void:
 		print("BEURKKKK")
 		has_collided = true
 		sprite.visible = false
+		emit_signal("bad_aliment_collected")
 		if Global.soundeffects_on:
 			$SoundEffect.play()
 			await $SoundEffect.finished
 		queue_free()
+		
 		if emit_signal("bad_aliment_collected") : 
 			print("Signal bad_aliment_collected émis !")
 

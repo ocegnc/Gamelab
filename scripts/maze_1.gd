@@ -11,7 +11,8 @@ extends Node2D
 @onready var scorelabel : Label
 @onready var canvasLayer = $CanvasLayerUI
 @onready var aliments_to_show = preload("res://scenes/aliments.tscn")
-@onready var countdown_label := $CountdownLayer/CountdownLabel
+@onready var countdown_label := $EffectLayer/CountdownLabel
+@onready var penalty_label = $EffectLayer/PenaltyLabel
 
 var game_started := false
 var floor_tile_top := Vector2i(1,2)
@@ -96,7 +97,11 @@ func _ready():
 	panel_list_aliments()
 	var aliments = get_tree().get_nodes_in_group("aliments")
 	show_aliments_to_collect(aliments)
-	start_countdown()
+	if Global.skip_countdown_on_reload:
+		Global.skip_countdown_on_reload = false  # reset le flag pour la prochaine fois
+		game_started = true
+	else:
+		start_countdown()
 
 func panel_list_aliments():
 	if canvasLayer.has_node("AlimentPanel"):
@@ -211,17 +216,36 @@ func install_pausebutton():
 func start_countdown():
 	countdown_label.show()
 	var countdown_texts = ["3", "2", "1", "Go!"]
-	countdown_label.add_theme_color_override("font_color", Color.BLACK)
 	countdown_label.add_theme_font_size_override("font_size", 80)
 
 	for text in countdown_texts:
 		countdown_label.text = text
-		await get_tree().process_frame 
-		await get_tree().create_timer(1.0).timeout
+		countdown_label.modulate = Color(0.176, 0.529, 0.298)  # noir opaque
+		countdown_label.scale = Vector2(0.5, 0.5)     # petit au départ
+
+		var tween = create_tween()
+		tween.tween_property(countdown_label, "scale", Vector2.ONE * 1.5, 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(countdown_label, "modulate:a", 0.0, 0.8)
+
+		await tween.finished
+		await get_tree().create_timer(0.2).timeout
 
 	countdown_label.hide()
 	game_started = true
 	
+func show_time_penalty():
+	penalty_label.text = "-5 sec"
+	penalty_label.modulate = Color(1, 0, 0, 1)  # rouge opaque
+	penalty_label.scale = Vector2(0.5, 0.5)
+	penalty_label.rotation = deg_to_rad(-20)
+	penalty_label.show()
+
+	var tween = create_tween()
+	tween.tween_property(penalty_label, "scale", Vector2(1.5, 1.5), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(penalty_label, "rotation", deg_to_rad(20), 0.5)
+	tween.parallel().tween_property(penalty_label, "modulate", Color(1, 0, 0, 0), 0.5).set_delay(0.3)
+	tween.tween_callback(Callable(penalty_label, "hide")).set_delay(0.5)
+
 func install_pausemenu():
 	var pause_menu_scene = preload("res://scenes/Pause.tscn")
 	var pause_menu = pause_menu_scene.instantiate()
@@ -259,6 +283,7 @@ func _process(delta):
 func make_loose_time():
 	print("Le joueur a ramassé un mauvais aliment, tu perds du temps !")
 	time = max(0, time - 5)  
+	show_time_penalty()
 	
 func initialize_grid():
 	for x in range(WIDTH):
@@ -719,18 +744,20 @@ func put_good_aliment(aliment_positions,room):
 func put_bad_aliment(bad_aliment_positions,room):
 	for pos in bad_aliment_positions:
 	# Conversion en coordonnées globales
-				var global_pos = Vector2i(room.position) + pos
-	
-	# Création et placement de l'aliment
-				var bad_aliment = bad_aliment_scene.instantiate()
-				bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
-				bad_aliment.position = tile_map_layer.map_to_local(global_pos)
-	
-	# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
-	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
-	
-				add_child(bad_aliment)
-				bad_aliments.append(bad_aliment)
+		var global_pos = Vector2i(room.position) + pos
+
+# Création et placement de l'aliment
+		var bad_aliment = bad_aliment_scene.instantiate()
+		bad_aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
+		bad_aliment.position = tile_map_layer.map_to_local(global_pos)
+
+# Option : Aligner parfaitement sur la grille (supprime les décalages pixels)
+# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
+
+		bad_aliment.connect("bad_aliment_collected", Callable(self, "make_loose_time"))
+
+		add_child(bad_aliment)
+		bad_aliments.append(bad_aliment)
 				
 
 func place_knife(knife_local_pos,room):
