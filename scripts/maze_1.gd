@@ -78,6 +78,7 @@ var rooms = []
 
 var canvas_layer = CanvasLayer.new()
 var time = 10.0
+var aliment_icons := {}
 
 func _ready():
 	music_toggle()
@@ -94,7 +95,6 @@ func _ready():
 	var aliments = get_tree().get_nodes_in_group("aliments")
 	show_aliments_to_collect(aliments)
 
-
 func panel_list_aliments():
 	if canvasLayer.has_node("AlimentPanel"):
 		canvasLayer.get_node("AlimentPanel").queue_free()  # reset si relancé
@@ -103,7 +103,7 @@ func panel_list_aliments():
 	bottom_panel.name = "AlimentPanel"
 	bottom_panel.custom_minimum_size = Vector2(get_viewport().size.x, 80)
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.1, 0.5, 0.1, 0.8)  # Vert semi-transparent
+	style.bg_color = Color(0.3647, 0.6157, 0.3921, 0.8)  # Vert semi-transparent
 	bottom_panel.add_theme_stylebox_override("panel", style)
 	
 	bottom_panel.anchor_left = 0.0
@@ -129,13 +129,14 @@ func panel_list_aliments():
 	var label = Label.new()
 	label.text = "Try to find these aliments!"
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_color_override("font_color", Color.YELLOW)
+	label.add_theme_color_override("font_color", Color(0.627, 0.4196, 0.1529))
 	hbox.add_child(label)
 	
 	bottom_panel.add_child(hbox)
 	canvasLayer.add_child(bottom_panel)
 	
 func show_aliments_to_collect(aliments: Array):
+	aliment_icons.clear()
 	var hbox = canvasLayer.get_node("AlimentPanel/AlimentList")
 
 	for aliment in aliments:
@@ -150,8 +151,13 @@ func show_aliments_to_collect(aliments: Array):
 				tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 				tex_rect.custom_minimum_size = Vector2(64, 64)
 				hbox.add_child(tex_rect)
+				aliment_icons[aliment] = tex_rect 
 			else:
 				print("⚠️ Texture introuvable pour : ", aliment)
+
+func mark_aliment_collected(aliment_scene):
+	if aliment_icons.has(aliment_scene):
+		aliment_icons[aliment_scene].modulate = Color(0.5, 0.5, 0.5, 1.0)
 
 func install_score():
 	canvas_layer.layer = 1
@@ -668,6 +674,7 @@ func put_good_aliment(aliment_positions,room):
 	
 	# Création et placement de l'aliment
 				var aliment = aliment_scene.instantiate()
+				aliment.main = self
 				aliments_a_recuperer.append(aliment)
 				aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
 				aliment.position = tile_map_layer.map_to_local(global_pos)

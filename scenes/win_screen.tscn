@@ -82,7 +82,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_fmbnd")
 theme_override_styles/hover = SubResource("StyleBoxFlat_c6e5k")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_m0phg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_d7a11")
-text = "Main Menu"
+text = "HOME"
 
 [node name="Panel2" type="Panel" parent="."]
 layout_mode = 0
