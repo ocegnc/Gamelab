@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://1ueq2wi7ua2k"]
+[gd_scene load_steps=9 format=3 uid="uid://1ueq2wi7ua2k"]
 
 [ext_resource type="Texture2D" uid="uid://cj7ry6i27fl0x" path="res://assets/Win_screen.webp" id="1_bjve4"]
 [ext_resource type="Script" uid="uid://uo40ufe5ovp7" path="res://scripts/win_screen.gd" id="1_dno8n"]
@@ -35,6 +35,15 @@ corner_radius_bottom_left = 16
 shadow_size = 5
 shadow_offset = Vector2(0, 3.41)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erk2x"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
 [node name="WinScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -55,17 +64,13 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_pfrfl")
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -104.0
-offset_top = -37.0
-offset_right = 108.0
-offset_bottom = 33.0
+offset_left = -106.0
+offset_right = 106.0
+offset_bottom = 70.0
 grow_horizontal = 2
-grow_vertical = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
@@ -79,14 +84,31 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_m0phg")
 theme_override_styles/normal = SubResource("StyleBoxFlat_d7a11")
 text = "Main Menu"
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="Panel2" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_erk2x")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="ScoreLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 506.0
+offset_top = 262.5
+offset_right = 546.0
+offset_bottom = 285.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+
+[node name="ScoreList" type="VBoxContainer" parent="Panel2"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/separation = 9
 
 [connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]

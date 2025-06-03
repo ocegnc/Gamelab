@@ -103,3 +103,5 @@ stream = ExtResource("3_gnhwj")
 volume_db = -10.0
 autoplay = true
 parameters/looping = true
+
+[node name="CanvasLayerUI" type="CanvasLayer" parent="."]

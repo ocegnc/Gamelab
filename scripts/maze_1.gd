@@ -9,6 +9,9 @@ extends Node2D
 @onready var GameState = preload("res://scripts/game_state.gd")
 @onready var label: Label
 @onready var scorelabel : Label
+@onready var canvasLayer = $CanvasLayerUI
+@onready var aliments_to_show = preload("res://scenes/aliments.tscn")
+
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
 var floor_tile_bottom := Vector2i(3,3)
@@ -74,7 +77,7 @@ var grid = []
 var rooms = []
 
 var canvas_layer = CanvasLayer.new()
-var time = 90.0
+var time = 10.0
 
 func _ready():
 	music_toggle()
@@ -86,6 +89,69 @@ func _ready():
 	install_timer()
 	install_pausebutton()
 	install_pausemenu()
+	Global.player_score = 0
+	panel_list_aliments()
+	var aliments = get_tree().get_nodes_in_group("aliments")
+	show_aliments_to_collect(aliments)
+
+
+func panel_list_aliments():
+	if canvasLayer.has_node("AlimentPanel"):
+		canvasLayer.get_node("AlimentPanel").queue_free()  # reset si relancé
+
+	var bottom_panel = Panel.new()
+	bottom_panel.name = "AlimentPanel"
+	bottom_panel.custom_minimum_size = Vector2(get_viewport().size.x, 80)
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.5, 0.1, 0.8)  # Vert semi-transparent
+	bottom_panel.add_theme_stylebox_override("panel", style)
+	
+	bottom_panel.anchor_left = 0.0
+	bottom_panel.anchor_top = 1.0
+	bottom_panel.anchor_right = 1.0
+	bottom_panel.anchor_bottom = 1.0
+
+	bottom_panel.offset_left = 0
+	bottom_panel.offset_top = -80
+	bottom_panel.offset_right = 0
+	bottom_panel.offset_bottom = 0
+
+	var hbox = HBoxContainer.new()
+	hbox.name = "AlimentList"
+	hbox.anchor_left = 0
+	hbox.anchor_top = 0
+	hbox.anchor_right = 1
+	hbox.anchor_bottom = 1
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+	# Label avec le texte
+	var label = Label.new()
+	label.text = "Try to find these aliments!"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", Color.YELLOW)
+	hbox.add_child(label)
+	
+	bottom_panel.add_child(hbox)
+	canvasLayer.add_child(bottom_panel)
+	
+func show_aliments_to_collect(aliments: Array):
+	var hbox = canvasLayer.get_node("AlimentPanel/AlimentList")
+
+	for aliment in aliments:
+		if aliment.has_node("AnimatedSprite2D"):
+			var sprite = aliment.get_node("AnimatedSprite2D")
+			var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+
+			if texture:
+				var tex_rect = TextureRect.new()
+				tex_rect.texture = texture
+				tex_rect.expand = true
+				tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				tex_rect.custom_minimum_size = Vector2(64, 64)
+				hbox.add_child(tex_rect)
+			else:
+				print("⚠️ Texture introuvable pour : ", aliment)
 
 func install_score():
 	canvas_layer.layer = 1
@@ -135,17 +201,22 @@ func _on_pause_pressed():
 	get_tree().paused = true
 	$PauseMenu.visible = true
 
+func format_time(time_seconds: float) -> String:
+	var minutes = int(time_seconds) / 60
+	var seconds = int(time_seconds) % 60
+	var centi = int((time_seconds - int(time_seconds)) * 100)
+	return "%02d:%02d:%02d" % [minutes, seconds, centi]
+	
 func _process(delta):
 	time -= delta
-	var msec = fmod(time, 1) * 100
-	var sec = fmod(time, 60)
-	var min = fmod(time, 3600) / 60
-	label.text = "%02d:%02d:%02d" % [min, sec, msec]
+	time = max(time, 0)
+	label.text = format_time(time)
 	if time <= 0:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 func make_loose_time():
-	time -= 5   
+	print("Le joueur a ramassé un mauvais aliment, tu perds du temps !")
+	time = max(0, time - 5)  
 	
 func initialize_grid():
 	for x in range(WIDTH):
@@ -274,6 +345,8 @@ func is_wall_decor_tile(tile: Vector2i) -> bool:
 func is_valid_tile(tile: Vector2i) -> bool:
 	return tile != Vector2i(-1, -1)
 
+var bad_aliments = []
+
 func draw_dungeon():
 	
 	var fixed_room = FIXED_ROOMS[0]  # [x, y, width, height]
@@ -292,6 +365,9 @@ func draw_dungeon():
 	baguette.scale = Vector2(0.02, 0.02)
 	baguette.position = baguette_pos
 	add_child(baguette)
+
+	for bad_aliment in bad_aliments:
+		bad_aliment.bad_aliment_collected.connect(self.make_loose_time)
 			
 	for x in range(WIDTH):
 		var y = 0
@@ -611,6 +687,8 @@ func put_bad_aliment(bad_aliment_positions,room):
 	# aliment.position = tile_map_layer.map_to_local(global_pos).snapped(Vector2(32, 32))
 	
 				add_child(bad_aliment)
+				bad_aliments.append(bad_aliment)
+				
 
 func place_knife(knife_local_pos,room):
 	var knife_global_pos = Vector2i(room.position) + knife_local_pos
