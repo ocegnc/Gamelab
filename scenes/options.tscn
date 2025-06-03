@@ -126,7 +126,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_kici5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ssc5j")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8eux6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8fycf")
-text = "🏠"
+text = "HOME"
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
@@ -162,7 +162,7 @@ theme_override_font_sizes/font_size = 34
 theme_override_styles/hover = SubResource("StyleBoxFlat_j0iiu")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4bshs")
 theme_override_styles/normal = SubResource("StyleBoxFlat_usmjo")
-text = "   Music: 🎵"
+text = "   Music: YES"
 alignment = 0
 
 [node name="SoundEffectsToggle" type="Button" parent="Panel"]
@@ -181,7 +181,7 @@ theme_override_font_sizes/font_size = 34
 theme_override_styles/hover = SubResource("StyleBoxFlat_y0bnj")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ijqj3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_bv53g")
-text = "   Sound effects: 🎵"
+text = "   Sound effects: YES"
 alignment = 0
 
 [connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]

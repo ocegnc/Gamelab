@@ -43,9 +43,11 @@ func _sort_scores(a, b):
 	return b["score"] - a["score"]
 
 func _on_home_button_pressed() -> void:
+	Global.player_score = 0
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
 func _on_replay_pressed() -> void:
+	Global.player_score = 0
 	get_tree().change_scene_to_file("res://scenes/Maze1.tscn") 
 
 

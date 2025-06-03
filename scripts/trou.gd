@@ -40,5 +40,6 @@ func _on_body_entered(body) -> void:
 	await tween.finished
 	await get_tree().create_timer(0.3).timeout
 
+	Global.player_score = 0
 	Global.skip_countdown_on_reload = true
 	get_tree().reload_current_scene()
