@@ -94,6 +94,7 @@ func _ready():
 	install_pausebutton()
 	install_pausemenu()
 	Global.player_score = 0
+	_on_score_updated(Global.player_score)
 	panel_list_aliments()
 	var aliments = get_tree().get_nodes_in_group("aliments")
 	show_aliments_to_collect(aliments)
@@ -292,9 +293,9 @@ func initialize_grid():
 			grid[x].append(1)
 
 func _on_score_updated(new_score):
+	Global.player_score = new_score
 	if scorelabel:
 		scorelabel.text = "Score: %d" % new_score
-		Global.player_score = new_score
 		print("Score mis à jour: ", new_score) 
 
 func music_toggle():
