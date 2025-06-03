@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var sprite = $AnimatedSprite2D
+var main
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,3 +29,5 @@ func _on_body_entered(body: Node2D) -> void:
 			$SoundEffect.play()
 			await $SoundEffect.finished
 		queue_free()
+		if main:
+			main.mark_aliment_collected(self)

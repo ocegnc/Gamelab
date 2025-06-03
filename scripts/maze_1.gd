@@ -11,7 +11,9 @@ extends Node2D
 @onready var scorelabel : Label
 @onready var canvasLayer = $CanvasLayerUI
 @onready var aliments_to_show = preload("res://scenes/aliments.tscn")
+@onready var countdown_label := $CountdownLayer/CountdownLabel
 
+var game_started := false
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
 var floor_tile_bottom := Vector2i(3,3)
@@ -77,7 +79,8 @@ var grid = []
 var rooms = []
 
 var canvas_layer = CanvasLayer.new()
-var time = 10.0
+var time = 90.0
+var aliment_icons := {}
 
 func _ready():
 	music_toggle()
@@ -93,7 +96,7 @@ func _ready():
 	panel_list_aliments()
 	var aliments = get_tree().get_nodes_in_group("aliments")
 	show_aliments_to_collect(aliments)
-
+	start_countdown()
 
 func panel_list_aliments():
 	if canvasLayer.has_node("AlimentPanel"):
@@ -103,7 +106,7 @@ func panel_list_aliments():
 	bottom_panel.name = "AlimentPanel"
 	bottom_panel.custom_minimum_size = Vector2(get_viewport().size.x, 80)
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.1, 0.5, 0.1, 0.8)  # Vert semi-transparent
+	style.bg_color = Color(0.3647, 0.6157, 0.3921, 0.8)  # Vert semi-transparent
 	bottom_panel.add_theme_stylebox_override("panel", style)
 	
 	bottom_panel.anchor_left = 0.0
@@ -129,13 +132,14 @@ func panel_list_aliments():
 	var label = Label.new()
 	label.text = "Try to find these aliments!"
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_color_override("font_color", Color.YELLOW)
+	label.add_theme_color_override("font_color", Color(0.627, 0.4196, 0.1529))
 	hbox.add_child(label)
 	
 	bottom_panel.add_child(hbox)
 	canvasLayer.add_child(bottom_panel)
 	
 func show_aliments_to_collect(aliments: Array):
+	aliment_icons.clear()
 	var hbox = canvasLayer.get_node("AlimentPanel/AlimentList")
 
 	for aliment in aliments:
@@ -150,8 +154,13 @@ func show_aliments_to_collect(aliments: Array):
 				tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 				tex_rect.custom_minimum_size = Vector2(64, 64)
 				hbox.add_child(tex_rect)
+				aliment_icons[aliment] = tex_rect 
 			else:
 				print("⚠️ Texture introuvable pour : ", aliment)
+
+func mark_aliment_collected(aliment_scene):
+	if aliment_icons.has(aliment_scene):
+		aliment_icons[aliment_scene].modulate = Color(0.5, 0.5, 0.5, 1.0)
 
 func install_score():
 	canvas_layer.layer = 1
@@ -179,17 +188,40 @@ func install_timer():
 
 func install_pausebutton():
 	var pause_button = Button.new()
-	pause_button.text = "⏸"
+	pause_button.text = "||"
 	pause_button.position = Vector2(get_viewport().size.x - 120, 20)
+	pause_button.add_theme_color_override("font_color", Color.BLACK)
 	pause_button.add_theme_font_size_override("font_size", 24)
 	pause_button.pressed.connect(_on_pause_pressed)
 	var stylebox = StyleBoxFlat.new()
-	stylebox.bg_color = Color(0, 0, 0, 0)
+	stylebox.bg_color = Color(0.3647, 0.6157, 0.3921, 0.8)
+	stylebox.content_margin_left = 10
+	stylebox.content_margin_right = 10
+	stylebox.content_margin_top = 5
+	stylebox.content_margin_bottom = 10
+	stylebox.corner_radius_bottom_left = 16
+	stylebox.corner_radius_bottom_right = 16
+	stylebox.corner_radius_top_right = 16
+	stylebox.corner_radius_top_left = 16
 	pause_button.add_theme_stylebox_override("normal", stylebox)
 	pause_button.add_theme_stylebox_override("hover", stylebox)
 	pause_button.add_theme_stylebox_override("pressed", stylebox)
 	canvas_layer.add_child(pause_button)
 
+func start_countdown():
+	countdown_label.show()
+	var countdown_texts = ["3", "2", "1", "Go!"]
+	countdown_label.add_theme_color_override("font_color", Color.BLACK)
+	countdown_label.add_theme_font_size_override("font_size", 80)
+
+	for text in countdown_texts:
+		countdown_label.text = text
+		await get_tree().process_frame 
+		await get_tree().create_timer(1.0).timeout
+
+	countdown_label.hide()
+	game_started = true
+	
 func install_pausemenu():
 	var pause_menu_scene = preload("res://scenes/Pause.tscn")
 	var pause_menu = pause_menu_scene.instantiate()
@@ -208,10 +240,20 @@ func format_time(time_seconds: float) -> String:
 	return "%02d:%02d:%02d" % [minutes, seconds, centi]
 	
 func _process(delta):
+	if not game_started:
+		return  # Attend la fin du compte à rebours
+		
 	time -= delta
 	time = max(time, 0)
 	label.text = format_time(time)
-	if time <= 0:
+	# Vérifie si tous les bons aliments sont récupérés
+	var total_aliments = aliments_a_recuperer.size()
+	var aliments_restants = 0
+	for aliment in aliments_a_recuperer:
+		if is_instance_valid(aliment) and aliment.visible:
+			aliments_restants += 1
+
+	if time <= 0 or aliments_restants == 0:
 		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 func make_loose_time():
@@ -668,6 +710,7 @@ func put_good_aliment(aliment_positions,room):
 	
 	# Création et placement de l'aliment
 				var aliment = aliment_scene.instantiate()
+				aliment.main = self
 				aliments_a_recuperer.append(aliment)
 				aliment.scale = Vector2(0.08, 0.08)  # Échelle réduite à 10%
 				aliment.position = tile_map_layer.map_to_local(global_pos)
