@@ -10,7 +10,7 @@ extends Node2D
 @onready var label: Label
 @onready var scorelabel : Label
 @onready var canvasLayer = $CanvasLayerUI
-@onready var aliments_to_show = preload("res://scenes/aliments.tscn")
+@onready var aliments_to_show = preload("res://scenes/good-aliments.tscn")
 @onready var countdown_label := $EffectLayer/CountdownLabel
 @onready var penalty_label = $EffectLayer/PenaltyLabel
 
