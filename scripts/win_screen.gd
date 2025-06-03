@@ -4,8 +4,8 @@ extends Control
 func _process(delta: float) -> void:
 	pass
 
-@onready var score_label = $ScoreLabel
-@onready var score_list = $ScoreList  # un VBoxContainer ou ItemList
+@onready var score_label = $Panel2/ScoreLabel
+@onready var score_list = $Panel2/ScoreList  # un VBoxContainer ou ItemList
 
 func _ready() -> void:
 	# Ajoute le dernier score dans la liste globale

@@ -9,6 +9,9 @@ extends Node2D
 @onready var GameState = preload("res://scripts/game_state.gd")
 @onready var label: Label
 @onready var scorelabel : Label
+@onready var canvasLayer = $CanvasLayerUI
+@onready var aliments_to_show = preload("res://scenes/aliments.tscn")
+
 var floor_tile_top := Vector2i(1,2)
 var floor_tile := Vector2i(2,3)
 var floor_tile_bottom := Vector2i(3,3)
@@ -87,6 +90,68 @@ func _ready():
 	install_pausebutton()
 	install_pausemenu()
 	Global.player_score = 0
+	panel_list_aliments()
+	var aliments = get_tree().get_nodes_in_group("aliments")
+	show_aliments_to_collect(aliments)
+
+
+func panel_list_aliments():
+	if canvasLayer.has_node("AlimentPanel"):
+		canvasLayer.get_node("AlimentPanel").queue_free()  # reset si relancé
+
+	var bottom_panel = Panel.new()
+	bottom_panel.name = "AlimentPanel"
+	bottom_panel.custom_minimum_size = Vector2(get_viewport().size.x, 80)
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.5, 0.1, 0.8)  # Vert semi-transparent
+	bottom_panel.add_theme_stylebox_override("panel", style)
+	
+	bottom_panel.anchor_left = 0.0
+	bottom_panel.anchor_top = 1.0
+	bottom_panel.anchor_right = 1.0
+	bottom_panel.anchor_bottom = 1.0
+
+	bottom_panel.offset_left = 0
+	bottom_panel.offset_top = -80
+	bottom_panel.offset_right = 0
+	bottom_panel.offset_bottom = 0
+
+	var hbox = HBoxContainer.new()
+	hbox.name = "AlimentList"
+	hbox.anchor_left = 0
+	hbox.anchor_top = 0
+	hbox.anchor_right = 1
+	hbox.anchor_bottom = 1
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+	# Label avec le texte
+	var label = Label.new()
+	label.text = "Try to find these aliments!"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_color_override("font_color", Color.YELLOW)
+	hbox.add_child(label)
+	
+	bottom_panel.add_child(hbox)
+	canvasLayer.add_child(bottom_panel)
+	
+func show_aliments_to_collect(aliments: Array):
+	var hbox = canvasLayer.get_node("AlimentPanel/AlimentList")
+
+	for aliment in aliments:
+		if aliment.has_node("AnimatedSprite2D"):
+			var sprite = aliment.get_node("AnimatedSprite2D")
+			var texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+
+			if texture:
+				var tex_rect = TextureRect.new()
+				tex_rect.texture = texture
+				tex_rect.expand = true
+				tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				tex_rect.custom_minimum_size = Vector2(64, 64)
+				hbox.add_child(tex_rect)
+			else:
+				print("⚠️ Texture introuvable pour : ", aliment)
 
 func install_score():
 	canvas_layer.layer = 1
