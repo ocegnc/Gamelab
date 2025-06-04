@@ -9,14 +9,21 @@ func _process(delta: float) -> void:
 @onready var score_list = $Panel2/ScoreList  # un VBoxContainer ou ItemList
 
 func _ready() -> void:
-	# Ajoute le dernier score dans la liste globale
-	Global.scores.append({"name": Global.player_name, "score": Global.player_score})
-	# Optionnel : trier la liste par score décroissant
-	Global.scores.sort_custom(self._sort_scores)
-
+	# Crée une nouvelle entrée
 	var player_name = Global.player_name.strip_edges()
 	if player_name == "":
 		player_name = "unknown"
+	var new_entry = {
+			"name": player_name,
+			"score": Global.player_score
+		}
+		
+	# Ajoute le dernier score dans la liste globale
+	Global.scores.append(new_entry)
+	
+	# Optionnel : trier la liste par score décroissant
+	Global.scores.sort_custom(self._sort_scores)
+
 	# Affiche le score du joueur
 	if Global.player_score == 0:
 		score_label.text = "Nothing to eat ... you should try again !!"
@@ -33,14 +40,14 @@ func _ready() -> void:
 		var name = str(entry["name"]).strip_edges()
 		if name == "":
 			name = "unknown"
-		var score = entry["score"]
+		var score = int(entry["score"])
 		var label = Label.new()
 		label.text = "%d. %s : %d" % [i + 1, name, score]
 		score_list.add_child(label)
 
 func _sort_scores(a, b):
 	# Tri décroissant par score
-	return b["score"] - a["score"]
+	return int(b["score"]) - int(a["score"])
 
 func _on_home_button_pressed() -> void:
 	Global.player_score = 0
@@ -49,7 +56,3 @@ func _on_home_button_pressed() -> void:
 func _on_replay_pressed() -> void:
 	Global.player_score = 0
 	get_tree().change_scene_to_file("res://scenes/Maze1.tscn") 
-
-
-func _on_replay_button_pressed() -> void:
-	pass # Replace with function body.

@@ -21,8 +21,12 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	if body is CharacterBody2D:
-		print(GameState.score)
-		GameState.instance.score += 1
+		Global.player_score += 1
+		# Obtenir la scène principale et appeler sa méthode
+		var maze = get_tree().get_current_scene()
+		if maze.has_method("_on_score_updated"):
+			maze._on_score_updated(Global.player_score)
+			
 		has_collided = true
 		sprite.visible = false
 		if Global.soundeffects_on:

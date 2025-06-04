@@ -1,5 +1,4 @@
 extends CharacterBody2D
-@onready var GameState = preload("res://scripts/game_state.gd")
 # Variables de mouvement
 var current_speed = 50.0
 const BASE_SPEED = 50.0
