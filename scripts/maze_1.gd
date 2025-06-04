@@ -6,7 +6,6 @@ extends Node2D
 @onready var knife_scene = preload("res://scenes/traps/knife.tscn")
 @onready var aliment_scene = preload("res://scenes/good-aliments.tscn")
 @onready var bad_aliment_scene = preload("res://scenes/bad-aliments.tscn")
-@onready var GameState = preload("res://scripts/game_state.gd")
 @onready var label: Label
 @onready var scorelabel : Label
 @onready var canvasLayer = $CanvasLayerUI
@@ -89,12 +88,11 @@ func _ready():
 	initialize_grid()
 	generate_dungeon()
 	draw_dungeon()
+	Global.player_score = 0
 	install_score()
 	install_timer()
 	install_pausebutton()
 	install_pausemenu()
-	Global.player_score = 0
-	_on_score_updated(Global.player_score)
 	panel_list_aliments()
 	var aliments = get_tree().get_nodes_in_group("aliments")
 	show_aliments_to_collect(aliments)
@@ -176,9 +174,9 @@ func install_score():
 	scorelabel.position = Vector2(20, 20)  # Position différente du timer
 	scorelabel.add_theme_font_size_override("font_size", 30)
 	scorelabel.add_theme_color_override("font_color", Color.BLACK)
-	print("GameState.instance =", GameState.instance)
-	GameState.instance.score_updated.connect(_on_score_updated)	
-
+	canvas_layer.add_child(scorelabel) 
+	_on_score_updated(Global.player_score)
+	
 func install_timer():
 	label = Label.new()
 	label.name = "TimerLabel"
@@ -293,7 +291,6 @@ func initialize_grid():
 			grid[x].append(1)
 
 func _on_score_updated(new_score):
-	Global.player_score = new_score
 	if scorelabel:
 		scorelabel.text = "Score: %d" % new_score
 		print("Score mis à jour: ", new_score) 
