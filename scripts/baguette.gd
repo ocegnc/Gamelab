@@ -49,14 +49,14 @@ func handle_movement_input():
 	var horizontal = 0
 	var vertical = 0
 	
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("move_right"):
 		horizontal = 1
-	elif Input.is_action_pressed("ui_left"):
+	elif Input.is_action_pressed("move_left"):
 		horizontal = -1
 	
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("move_up"):
 		vertical = -1
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("move_down"):
 		vertical = 1
 	
 	# Priorité : si horizontal est différent de zéro, on bouge horizontalement seulement
@@ -74,8 +74,8 @@ func handle_movement_input():
 	# Cela permet de garder la dernière direction même quand aucune touche n'est pressée
 
 func update_speed(delta: float) -> void:
-	var is_accelerating = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") \
-						or Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")
+	var is_accelerating = Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left") \
+						or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_down")
 	
 	if is_accelerating:
 		current_speed = min(current_speed + ACCELERATION * delta, MAX_SPEED)
