@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnj1l0h81drai"]
+[gd_scene load_steps=15 format=3 uid="uid://c7voy2yyb7mth"]
 
-[ext_resource type="Script" path="res://scripts/options.gd" id="1_0o6v7"]
+[ext_resource type="Script" uid="uid://dg7od7whnmhsk" path="res://scripts/options.gd" id="1_0o6v7"]
 [ext_resource type="Texture2D" uid="uid://d0n1k6ywbcbd7" path="res://assets/Background Menu.png" id="2_1fpql"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gib3i"]
@@ -44,6 +44,46 @@ corner_radius_bottom_left = 16
 shadow_size = 5
 shadow_offset = Vector2(0, 3.41)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0iiu"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4bshs"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_usmjo"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0bnj"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijqj3"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bv53g"]
+bg_color = Color(0.364706, 0.615686, 0.392157, 1)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [node name="options" type="Control"]
 layout_mode = 3
 anchors_preset = 0
@@ -78,15 +118,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
-theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_colors/font_color = Color(0.628592, 0.420328, 0.151188, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
 theme_override_font_sizes/font_size = 30
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kici5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ssc5j")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8eux6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8fycf")
-text = "🏠"
+text = "HOME"
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
@@ -101,10 +141,50 @@ text = "2D Assets sources:
 Aliment package: https://kenney.nl/assets/food-kit
 
 Sound Sources: 
-Music: walen folk danse by ???
+Music: Folk danse by Walen https://soundcloud.com/walen-603731344
 
 
 "
 horizontal_alignment = 1
 
+[node name="MusicToggle" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 758.0
+offset_top = 62.0
+offset_right = 1096.0
+offset_bottom = 131.0
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/hover = SubResource("StyleBoxFlat_j0iiu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4bshs")
+theme_override_styles/normal = SubResource("StyleBoxFlat_usmjo")
+text = "   Music: YES"
+alignment = 0
+
+[node name="SoundEffectsToggle" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 758.0
+offset_top = 129.0
+offset_right = 1096.0
+offset_bottom = 201.0
+theme_override_colors/font_hover_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_hover_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/icon_normal_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_focus_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_colors/font_pressed_color = Color(0.627451, 0.419608, 0.152941, 1)
+theme_override_font_sizes/font_size = 34
+theme_override_styles/hover = SubResource("StyleBoxFlat_y0bnj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ijqj3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bv53g")
+text = "   Sound effects: YES"
+alignment = 0
+
 [connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Panel/MusicToggle" to="." method="_on_music_toggle_pressed"]
+[connection signal="toggled" from="Panel/MusicToggle" to="." method="_on_music_toggle_toggled"]
+[connection signal="pressed" from="Panel/SoundEffectsToggle" to="." method="_on_sound_effects_toggle_pressed"]

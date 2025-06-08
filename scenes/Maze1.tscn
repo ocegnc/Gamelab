@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://tkg17k5p8r1u"]
+[gd_scene load_steps=6 format=3 uid="uid://tkg17k5p8r1u"]
 
-[ext_resource type="Script" path="res://scripts/maze_1.gd" id="1_vv1ol"]
+[ext_resource type="Script" uid="uid://xij4fcs3wu2c" path="res://scripts/maze_1.gd" id="1_vv1ol"]
 [ext_resource type="Texture2D" uid="uid://6wyif868rvkb" path="res://assets/Maze_16x16-Recovered-Recovered-sheet.png" id="2_1m6tt"]
+[ext_resource type="AudioStream" uid="uid://ddxjnptrcwdfu" path="res://assets/Sound/walen-folk-dance.mp3" id="3_gnhwj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ke5qt"]
 texture = ExtResource("2_1m6tt")
@@ -96,3 +97,54 @@ script = ExtResource("1_vv1ol")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_xfylr")
+
+[node name="MusicGame" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gnhwj")
+volume_db = -10.0
+autoplay = true
+parameters/looping = true
+
+[node name="CanvasLayerUI" type="CanvasLayer" parent="."]
+
+[node name="EffectLayer" type="CanvasLayer" parent="."]
+
+[node name="CountdownLabel" type="Label" parent="EffectLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -46.0
+offset_right = 80.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.176471, 0.529412, 0.298039, 1)
+theme_override_colors/font_shadow_color = Color(0.364706, 0.615686, 0.298039, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+
+[node name="PenaltyLabel" type="Label" parent="EffectLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -27.5
+offset_right = 20.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="ScreenOverlay" type="ColorRect" parent="EffectLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

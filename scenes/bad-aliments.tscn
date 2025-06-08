@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://c08ey4p043010"]
 
-[ext_resource type="Script" path="res://scripts/bad_aliments.gd" id="1_m7mbi"]
+[ext_resource type="Script" uid="uid://df7v3fy6c50wp" path="res://scripts/bad_aliments.gd" id="1_m7mbi"]
 [ext_resource type="Texture2D" uid="uid://rat2snchrj3d" path="res://assets/Aliment.png" id="2_ex2ec"]
 [ext_resource type="AudioStream" uid="uid://dcujvgp8a5xbm" path="res://assets/Sound/SoundEffect-Ish.mp3" id="3_qgnfs"]
 
@@ -157,21 +157,23 @@ size = Vector2(20.5, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w81vc"]
 
-[node name="bad-aliments" type="Area2D"]
+[node name="bad-aliments" type="Area2D" groups=["bad-aliments"]]
 script = ExtResource("1_m7mbi")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["bad-aliments"]]
 scale = Vector2(6.16, 6.16)
 sprite_frames = SubResource("SpriteFrames_bwm48")
 frame = 7
 frame_progress = 0.251148
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D" groups=["bad-aliments"]]
 shape = SubResource("RectangleShape2D_xf4kq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["bad-aliments"]]
 shape = SubResource("RectangleShape2D_w81vc")
 
 [node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qgnfs")
-volume_db = 5.0
+volume_db = 22.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

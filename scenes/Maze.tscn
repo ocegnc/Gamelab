@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmy2gh36pf4x6"]
+[gd_scene load_steps=6 format=3 uid="uid://c0nso6ti1hnik"]
 
-[ext_resource type="Texture2D" uid="uid://dpek53h34lmea" path="res://assets/Maze_proto.png" id="1_c0wnl"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w1bfv"]
+load_path = "res://.godot/imported/Maze_proto.png-620e754930ec6399f15302315cdd80ce.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3kuji"]
 resource_name = "00"
-texture = ExtResource("1_c0wnl")
+texture = SubResource("CompressedTexture2D_w1bfv")
 24:1/0 = 0
 25:1/0 = 0
 26:1/0 = 0
@@ -2827,7 +2828,7 @@ texture = ExtResource("1_c0wnl")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xko1a"]
 resource_name = "01"
-texture = ExtResource("1_c0wnl")
+texture = SubResource("CompressedTexture2D_w1bfv")
 24:1/0 = 0
 25:1/0 = 0
 26:1/0 = 0
